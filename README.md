@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/i18n4e.svg)](https://badge.fury.io/js/i18n4e)
 
 
-i18n4e is a quick and easy way to add i18n support to your Express Js application.
+i18n4e is a quick and easy way to add internationalization support to your Express Js application.
 
 
 ## 🚀 Installation
