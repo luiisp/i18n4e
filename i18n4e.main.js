@@ -1,11 +1,11 @@
-const { getTranslationsPath } = require("./files.handler");
-const { previousLocalsMiddleware } = require("./middleware");
+const { getTranslationsPath } = require("./core/files.handler");
+const { previousLocalsMiddleware } = require("./core/middleware");
 
 const i18n4e = {
   languages: {},
   defaultLang: "en",
   path: "/i18n4e/i/translations/",
-  middleware: previousLocalsMiddleware, // Removido a chamada de função
+  middleware: previousLocalsMiddleware, 
 
   route: () => {
     return (req, res) => {
