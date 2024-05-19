@@ -5,7 +5,7 @@ const i18n4e = {
   languages: {},
   defaultLang: "en",
   path: "/i18n4e/i/translations/",
-  middleware: previousLocalsMiddleware, 
+  middleware: previousLocalsMiddleware,
 
   route: () => {
     return (req, res) => {
@@ -37,10 +37,10 @@ const i18n4e = {
       langsFolder: undefined,
       mainFile: undefined,
       files: undefined,
-      renderBeforeEjs: false,
       previousLocalsMiddleware: false,
       i18n4ePath: undefined,
-    }
+    },
+    renderWithDocument = false
   ) => {
     if (customPreferences.defaultLang) {
       i18n4e.defaultLang = customPreferences.defaultLang;
@@ -50,8 +50,6 @@ const i18n4e = {
       i18n4e.path = customPreferences.i18n4ePath;
     }
 
-    
-
     if (!customPreferences.previousLocalsMiddleware) {
       app.use(i18n4e.middleware);
       return;
@@ -59,11 +57,10 @@ const i18n4e = {
 
     return getTranslationsPath(customPreferences)
       .then((returnValues) => {
-
         app.use(`${i18n4e.path}/`, i18n4e.route());
         i18n4e.languages = returnValues;
         console.log("i18n4e languages loaded", returnValues);
-        app.use(i18n4e.middleware); 
+        app.use(i18n4e.middleware);
         return returnValues;
       })
       .catch((err) => {
