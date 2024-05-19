@@ -66,10 +66,9 @@ const i18n4e = {
     },
     renderWithDocument = false
   ) => {
-    console.log(_getCallerFile())
-    import('stack-trace').then((StackTrace) => {
-      const caller = StackTrace.get()[0].getFileName();
-      console.log("caller", caller);
+
+
+      const caller = _getCallerFile();
       const callerPathParts = caller.split("\\");
       const callerPathPartsNoLast = callerPathParts.slice(0, -1);
       const finalPath = callerPathPartsNoLast.join("\\");
@@ -85,12 +84,9 @@ const i18n4e = {
       customPreferences.langsFolder = finalPath + "/langs";
     }
 
-    if (!customPreferences.previousLocalsMiddleware) {
+    if (customPreferences.previousLocalsMiddleware) {
       app.use(i18n4e.middleware);
-      return;
     }
-
-    console.log("PREFERENCEs", customPreferences);
 
     return getTranslationsPath(customPreferences)
       .then((returnValues) => {
@@ -98,18 +94,18 @@ const i18n4e = {
         i18n4e.languages = returnValues;
         console.log("i18n4e languages loaded", returnValues);
         app.use(i18n4e.middleware);
+        console.log("Returned Values",returnValues);
         return returnValues;
       })
       .catch((err) => {
-        console.error(err);
-        return undefined;
+        
+        const messageError = "\n [i18n4e Error (On Init)] -> " + err.message + "\n";
+        console.error(messageError);
+        throw new Error("i18n4e Init Error");
       });
 
       
       console.log("callerDir", finalPath);
-    }).catch((error) => {
-      console.error(error);
-    });
 
 
   },
