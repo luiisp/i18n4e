@@ -14,7 +14,7 @@ const getTranslationsPath = (customPreferences = {}) => {
     return new Promise((resolve, reject) => {
         fs.readdir(langsFolder, (err, files) => {
             if (err) {
-                return reject(new Error(`Unable to read i18n4ejs folders in ${langsFolder}`));
+                return reject(new Error(`Unable to read i18n4e folders in ${langsFolder}`));
             }
 
             const returnValues = {};
@@ -24,7 +24,7 @@ const getTranslationsPath = (customPreferences = {}) => {
 
                     fs.stat(filePath, (err, stats) => {
                         if (err) {
-                            return reject(new Error(`Unable to read i18n4ejs folder in ${filePath}`));
+                            return reject(new Error(`Unable to read i18n4e folder in ${filePath}`));
                         }
 
                         if (stats.isDirectory()) {
@@ -32,7 +32,7 @@ const getTranslationsPath = (customPreferences = {}) => {
 
                             fs.access(translationFilePath, fs.constants.F_OK, (err) => {
                                 if (err) {
-                                    return reject(new Error(`Unable to read i18n4ejs translation file in ${translationFilePath}`));
+                                    return reject(new Error(`Unable to read i18n4e translation file in ${translationFilePath}`));
                                 } else {
                                     returnValues[file] = translationFilePath;
                                     return resolve();
@@ -52,16 +52,17 @@ const getTranslationsPath = (customPreferences = {}) => {
     });
 };
 
-const i18n4ejs = {
+const i18n4e = {
     languages: {},
     defaultLang: 'en',
-    path: '/i18n4ejs',
+    path: '/i18n4e/i/translations/',
     middleware: () => {
         return (req, res, next) => {
-            res.locals.i18n4ejs = {
-                languages: Object.keys(i18n4ejs.languages),
-                defaultLang: i18n4ejs.defaultLang,
-                path: i18n4ejs.path,
+            res.locals.i18n4e = {
+                languages: Object.keys(i18n4e.languages),
+                defaultLang: i18n4e.defaultLang,
+                path: i18n4e.path,
+                languagesFiles: i18n4e.languages,
             };
 
             next();
@@ -71,22 +72,19 @@ const i18n4ejs = {
     route: () => {
         return (req, res) => {
             let lang = req.query.lang;
-            console.log('lang', lang);
-            console.log('i18n4ejs.languages', i18n4ejs.languages);
-            console.log('i18n4ejs.languages[lang]', i18n4ejs.languages[lang]);
             if (!lang) {
                 return res.status(404).json({message: 'Not found'});
             }
 
             
-            let translations = require(i18n4ejs.languages[lang]);
+            let translations = require(i18n4e.languages[lang]);
 
             
             if (!translations) {
-                lang = i18n4ejs.defaultLang;
+                lang = i18n4e.defaultLang;
             }
 
-            translations = require(i18n4ejs.languages[lang]);
+            translations = require(i18n4e.languages[lang]);
 
             if (!lang || !translations) {
                 return res.status(404).json({message: 'Not found'});
@@ -98,28 +96,35 @@ const i18n4ejs = {
         };
     },
 
-    config: (app, customPreferences = {
+    init: (app, customPreferences = {
         defaultLang: undefined,
         langsFolder: undefined,
-        langFile: undefined,
-        i18n4ejsPath: undefined,
+        mainFile: undefined,
+        files: undefined,
+        previousLocalsMiddleware: false,
+        i18n4ePath: undefined,
     }) => {
         if (customPreferences.defaultLang) {
-            i18n4ejs.defaultLang = customPreferences.defaultLang;
+            i18n4e.defaultLang = customPreferences.defaultLang;
         }
 
-        if (customPreferences.i18n4ejsPath) {
-            i18n4ejs.path = customPreferences.i18n4ejsPath;
+        if (customPreferences.i18n4ePath) {
+            i18n4e.path = customPreferences.i18n4ePath;
         }
 
 
-       // app.use(`${i18n4ejs.path}/:lang`, i18n4ejs.route()); 
-        app.use(i18n4ejs.middleware());
+        app.use(`${i18n4e.path}/`, i18n4e.route()); 
+
+        if (!customPreferences.previousLocalsMiddleware) {
+            app.use(i18n4e.middleware());
+            return;
+        }
+        
 
         return getTranslationsPath(customPreferences)
             .then(returnValues => {
-                i18n4ejs.languages = returnValues;
-                console.log('i18n4ejs languages loaded', returnValues);
+                i18n4e.languages = returnValues;
+                console.log('i18n4e languages loaded', returnValues);
                 return returnValues;
             })
             .catch(err => {
@@ -129,4 +134,4 @@ const i18n4ejs = {
     }
 };
 
-module.exports = i18n4ejs;
+module.exports = i18n4e;

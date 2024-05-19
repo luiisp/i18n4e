@@ -1,20 +1,32 @@
 {
-  "name": "i18n4ejs",
+  "name": "i18n4e",
   "version": "1.0.0",
   "description": "A simple i18n library for ejs templates",
-  "main": "i18n4ejs.js",
+  "main": "i18n4e.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luiisp/i18n4ejs.git"
+    "url": "git+https://github.com/luiisp/i18n4e.git"
   },
   "author": "luisp",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/luiisp/i18n4ejs/issues"
+    "url": "https://github.com/luiisp/i18n4e/issues"
   },
-  "homepage": "https://github.com/luiisp/i18n4ejs#readme",
-  "keywords": ["i18n", "ejs", "template", "translation", "localization", "simple", "internationalization"]
+  "homepage": "https://github.com/luiisp/i18n4e#readme",
+  "keywords": [
+    "i18n",
+    "ejs",
+    "template",
+    "translation",
+    "localization",
+    "simple",
+    "internationalization"
+  ],
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
 }
