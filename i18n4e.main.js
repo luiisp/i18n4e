@@ -1,6 +1,30 @@
 const { getTranslationsPath } = require("./core/files.handler");
 const { previousLocalsMiddleware } = require("./core/middleware");
 
+
+function _getCallerFile() {
+  try {
+      var err = new Error();
+      var callerfile;
+      var currentfile;
+
+
+  Error.prepareStackTrace = function (err, stack) { return stack; };
+
+  currentfile = err.stack.shift().getFileName();
+
+  while (err.stack.length) {
+      callerfile = err.stack.shift().getFileName();
+
+      if(currentfile !== callerfile) return callerfile;
+  }
+} catch (err) {}
+return undefined;
+
+}
+
+
+
 const i18n4e = {
   languages: {},
   defaultLang: "en",
@@ -37,23 +61,36 @@ const i18n4e = {
       langsFolder: undefined,
       mainFile: undefined,
       files: undefined,
-      previousLocalsMiddleware: false,
+      previousLocalsMiddleware: true,
       i18n4ePath: undefined,
     },
     renderWithDocument = false
   ) => {
+    console.log(_getCallerFile())
+    import('stack-trace').then((StackTrace) => {
+      const caller = StackTrace.get()[0].getFileName();
+      console.log("caller", caller);
+      const callerPathParts = caller.split("\\");
+      const callerPathPartsNoLast = callerPathParts.slice(0, -1);
+      const finalPath = callerPathPartsNoLast.join("\\");
+
+      
     if (customPreferences.defaultLang) {
       i18n4e.defaultLang = customPreferences.defaultLang;
     }
 
-    if (customPreferences.i18n4ePath) {
-      i18n4e.path = customPreferences.i18n4ePath;
+    if (customPreferences.langsFolder) {
+      customPreferences.langsFolder = finalPath + customPreferences.langsFolder;
+    }else{
+      customPreferences.langsFolder = finalPath + "/langs";
     }
 
     if (!customPreferences.previousLocalsMiddleware) {
       app.use(i18n4e.middleware);
       return;
     }
+
+    console.log("PREFERENCEs", customPreferences);
 
     return getTranslationsPath(customPreferences)
       .then((returnValues) => {
@@ -67,7 +104,18 @@ const i18n4e = {
         console.error(err);
         return undefined;
       });
+
+      
+      console.log("callerDir", finalPath);
+    }).catch((error) => {
+      console.error(error);
+    });
+
+
   },
 };
+
+
+
 
 module.exports = i18n4e;

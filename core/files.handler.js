@@ -1,14 +1,16 @@
 const fs = require("fs");
 const path = require("path");
 
-const getTranslationsPath = (customPreferences = {}) => {
+const getTranslationsPaths = (customPreferences = {}) => {
   const definitions = {
-    path: customPreferences.langsFolder || "/langs",
-    file: customPreferences.langFile || "translation.json",
+    path: customPreferences.langsFolder ,
+    mainFile: customPreferences.langFile || "translation.json",
+    extraFiles: customPreferences.files || [],
   };
   console.log("definitions", definitions);
 
-  const langsFolder = path.join(__dirname, definitions.path);
+  console.log("langsFolder", definitions.path);
+  const langsFolder = path.join(definitions.path);
 
   return new Promise((resolve, reject) => {
     fs.readdir(langsFolder, (err, files) => {
@@ -31,20 +33,43 @@ const getTranslationsPath = (customPreferences = {}) => {
             }
 
             if (stats.isDirectory()) {
-              const translationFilePath = path.join(filePath, definitions.file);
+              const mainTranslationFilePath = path.join(filePath, definitions.mainFile);
 
-              fs.access(translationFilePath, fs.constants.F_OK, (err) => {
+              fs.access(mainTranslationFilePath, fs.constants.F_OK, (err) => {
                 if (err) {
                   return reject(
                     new Error(
-                      `Unable to read i18n4e translation file in ${translationFilePath}`
+                      `Unable to read i18n4e translation file in ${mainTranslationFilePath}`
                     )
                   );
                 } else {
-                  returnValues[file] = translationFilePath;
+                  returnValues[file] = mainTranslationFilePath;
                   return resolve();
                 }
               });
+
+
+              if (definitions.extraFiles.length) {
+                definitions.extraFiles.forEach((extraFile) => {
+                  const extraFilePath = path.join(filePath, extraFile);
+
+                  fs.access(extraFilePath, fs.constants.F_OK, (err) => {
+                    if (err) {
+                      return reject(
+                        new Error(
+                          `Unable to read i18n4e extra file in ${extraFilePath}`
+                        )
+                      );
+                    } else {
+                      returnValues[file] = extraFilePath;
+                      return resolve();
+                    }
+                  });
+                });
+              }
+
+
+
             } else {
               return resolve();
             }
@@ -60,5 +85,5 @@ const getTranslationsPath = (customPreferences = {}) => {
 };
 
 module.exports = {
-  getTranslationsPath,
+  getTranslationsPath: getTranslationsPaths,
 };
