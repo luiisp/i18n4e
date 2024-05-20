@@ -1,4 +1,4 @@
-interface CustomPreferences {
+interface options {
     defaultLang?: string;
     langsFolder?: string;
     mainFile?: string;
@@ -11,7 +11,7 @@ interface I18n4e {
     defaultLang: string;
     path: string;
     init: (app: any, // You might want to replace `any` with a specific type
-    customPreferences?: CustomPreferences, renderWithDocument?: boolean) => Promise<any>;
+    options?: options, renderWithDocument?: boolean) => Promise<any>;
 }
 declare const i18n4e: I18n4e;
 export default i18n4e;

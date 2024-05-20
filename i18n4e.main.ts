@@ -1,35 +1,16 @@
-import * as process from "process";
-import { getTranslationsPath } from "./core/files.handler";
-import { createPreviousLocalsMiddleware } from "./core/middleware";
-import { createMainTranslationsRoute } from "./core/route";
-
-interface CustomPreferences {
-  defaultLang?: string;
-  langsFolder?: string;
-  mainFile?: string;
-  extraFiles?: string;
-  previousLocalsMiddleware?: boolean;
-  path?: string;
-}
-
-interface I18n4e {
-  languages: any; // You might want to replace `any` with a specific type
-  defaultLang: string;
-  path: string;
-  init: (
-    app: any, // You might want to replace `any` with a specific type
-    customPreferences?: CustomPreferences,
-    renderWithDocument?: boolean
-  ) => Promise<any>; // You might want to replace `any` with a specific type
-}
+import * as process from 'process';
+import * as express from 'express';
+import { createMainTranslationsRoute } from './core/route';
+import { getLanguagesFilesPaths } from './core/files.handler';
+import { options, I18n4e } from './core/interfaces';
 
 const i18n4e: I18n4e = {
   languages: {},
-  defaultLang: "en",
-  path: "/i18n4e/i/translations",
+  defaultLang: 'en',
+  path: '/i18n4e/i/translations',
   init: (
-    app: any, 
-    customPreferences: CustomPreferences = {
+    app: any,
+    options: options = {
       defaultLang: undefined,
       langsFolder: undefined,
       mainFile: undefined,
@@ -39,12 +20,11 @@ const i18n4e: I18n4e = {
     },
     renderWithDocument: boolean = false
   ): Promise<any> => {
-    if (customPreferences.defaultLang)
-      i18n4e.defaultLang = customPreferences.defaultLang;
+    if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
-    if (customPreferences.path) i18n4e.path = customPreferences.path;
+    if (options.path) i18n4e.path = options.path;
 
-    if (customPreferences.previousLocalsMiddleware) {
+    if (options.previousLocalsMiddleware) {
       app.use((req: any, res: any, next: any) => {
         res.locals.i18n4e = {
           languages: i18n4e.languages,
@@ -56,18 +36,18 @@ const i18n4e: I18n4e = {
     }
 
     const caller = (i18n4e.init as any).caller.toString();
-    console.log("caller", caller);
-    const callerPathParts = caller?.split("\\");
+    console.log('caller', caller);
+    const callerPathParts = caller?.split('\\');
     const callerPathPartsNoLast = callerPathParts?.slice(0, -1);
-    const finalPath = callerPathPartsNoLast?.join("\\");
+    const finalPath = callerPathPartsNoLast?.join('\\');
 
-    if (customPreferences.langsFolder) {
-      customPreferences.langsFolder = finalPath + customPreferences.langsFolder;
+    if (options.langsFolder) {
+      options.langsFolder = finalPath + options.langsFolder;
     } else {
-      customPreferences.langsFolder = finalPath + "/_locales";
+      options.langsFolder = finalPath + '/_locales';
     }
 
-    return getTranslationsPath(customPreferences)
+    return getLanguagesFilesPaths(options)
       .then((returnValues: any) => {
         i18n4e.languages = returnValues;
 
@@ -77,16 +57,16 @@ const i18n4e: I18n4e = {
           i18n4e.path,
           i18n4e.defaultLang
         );
-        console.log("Returned Values", returnValues);
+        console.log('Returned Values', returnValues);
         return returnValues;
       })
       .catch((err: Error) => {
         const messageError = `\x1b[3m\x1b[34m[i18n4e\x1b[0m \x1b[31m\x1b[1mError\x1b[0m \x1b[3m\x1b[34m(On Init)]\x1b[0m  \x1b[33m-->\x1b[0m \x1b[31m\x1b[1m${err.message}\x1b[0m`;
         console.error(messageError);
-        throw new Error("i18n4e (Init Error)");
+        throw new Error('i18n4e (Init Error)');
       });
 
-    console.log("callerDir", finalPath);
+    console.log('callerDir', finalPath);
   },
 };
 
