@@ -2,10 +2,16 @@
   "name": "i18n4e",
   "version": "1.0.0",
   "description": "Internationalize express applications with the i18n standard",
-  "main": "i18n4e.main.js",
+  "main": "dist/i18n4e.main.js",
+  "types": "dist/i18n4e.main.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:server": "nodemon ./server/server.js"
+    "test:server": "nodemon ./server/server.js",
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./config/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./config/tsconfig.cjs.json",
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -30,5 +36,8 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12"
   }
 }

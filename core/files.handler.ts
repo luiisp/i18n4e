@@ -1,17 +1,21 @@
-const fs = require("fs");
-const path = require("path");
+import * as fs from "fs";
+import * as path from "path";
 
-const getTranslationsPaths = (customPreferences = {}) => {
+interface CustomPreferences {
+  langsFolder?: string;
+  mainFile?: string;
+  extraFiles?: string[];
+}
+
+const getTranslationsPaths = (customPreferences: CustomPreferences = {}): Promise<{ [key: string]: string[] }> => {
   const regex = /\/|\\/g;
   const definitions = {
-    path: customPreferences.langsFolder,
-    mainFile: customPreferences.langFile || "translation.json",
+    path: customPreferences.langsFolder || "",
+    mainFile: customPreferences.mainFile || "translation.json",
     extraFiles: customPreferences.extraFiles || [],
   };
 
   definitions.path = definitions.path.replace(regex, path.sep);
-
-  console.log("definitions", definitions);
 
   const langsFolder = path.join(definitions.path);
   console.log("langsFolder", langsFolder);
@@ -19,11 +23,11 @@ const getTranslationsPaths = (customPreferences = {}) => {
     fs.readdir(langsFolder, (err, files) => {
       if (err) {
         return reject(
-          new Error(`The Main folder i18n4e defined as (${definitions.path}) was not found.`)
+          new Error(`i18n4e languages folder defined as (${definitions.path}) was not found.`)
         );
       }
 
-      const returnValues = {};
+      const returnValues: { [key: string]: string[] } = {};
       const promises = files.map((file) => {
         return new Promise((resolve, reject) => {
           const filePath = path.join(langsFolder, file);
@@ -47,12 +51,12 @@ const getTranslationsPaths = (customPreferences = {}) => {
                     )
                   );
                 } else {
-                  returnValues[file] = [mainTranslationFilePath]
+                  returnValues[file] = [mainTranslationFilePath];
                   
                   if (definitions.extraFiles.length) {
                     console.log("have extra files");
 
-                    const extraPromises = definitions.extraFiles.map((extraFile, index) => {
+                    const extraPromises = definitions.extraFiles.map((extraFile) => {
                       return new Promise((resolve, reject) => {
                         const extraFilePath = path.join(filePath, extraFile);
                         console.log("extraFilePath", extraFilePath);
@@ -67,22 +71,22 @@ const getTranslationsPaths = (customPreferences = {}) => {
                           } else {
                             console.log("found extra file");
                             returnValues[file].push(extraFilePath); 
-                            resolve();
+                            resolve(returnValues);
                           }
                         });
                       });
                     });
 
                     Promise.all(extraPromises)
-                      .then(() => resolve())
+                      .then(() => resolve(returnValues))
                       .catch(reject);
                   } else {
-                    resolve();
+                    resolve(returnValues);
                   }
                 }
               });
             } else {
-              resolve();
+              resolve(returnValues);
             }
           });
         });
@@ -95,6 +99,4 @@ const getTranslationsPaths = (customPreferences = {}) => {
   });
 };
 
-module.exports = {
-  getTranslationsPath: getTranslationsPaths,
-};
+export { getTranslationsPaths };
