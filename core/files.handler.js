@@ -2,21 +2,24 @@ const fs = require("fs");
 const path = require("path");
 
 const getTranslationsPaths = (customPreferences = {}) => {
+  const regex = /\/|\\/g;
   const definitions = {
     path: customPreferences.langsFolder,
     mainFile: customPreferences.langFile || "translation.json",
-    extraFiles: customPreferences.files || [],
+    extraFiles: customPreferences.extraFiles || [],
   };
 
-  console.log("definitions", definitions); 
+  definitions.path = definitions.path.replace(regex, path.sep);
+
+  console.log("definitions", definitions);
 
   const langsFolder = path.join(definitions.path);
-  console.log("langsFolder", langsFolder); 
+  console.log("langsFolder", langsFolder);
   return new Promise((resolve, reject) => {
     fs.readdir(langsFolder, (err, files) => {
       if (err) {
         return reject(
-          new Error(`Unable to read i18n4e folders in ${langsFolder}`)
+          new Error(`The Main folder i18n4e defined as (${definitions.path}) was not found.`)
         );
       }
 
@@ -34,7 +37,7 @@ const getTranslationsPaths = (customPreferences = {}) => {
 
             if (stats.isDirectory()) {
               const mainTranslationFilePath = path.join(filePath, definitions.mainFile);
-              console.log("mainTranslationFilePath", mainTranslationFilePath); 
+              console.log("mainTranslationFilePath", mainTranslationFilePath);
 
               fs.access(mainTranslationFilePath, fs.constants.F_OK, (err) => {
                 if (err) {
@@ -44,37 +47,42 @@ const getTranslationsPaths = (customPreferences = {}) => {
                     )
                   );
                 } else {
-                  returnValues[file] = {
-                    0: mainTranslationFilePath,
-                  };
+                  returnValues[file] = [mainTranslationFilePath]
+                  
+                  if (definitions.extraFiles.length) {
+                    console.log("have extra files");
+
+                    const extraPromises = definitions.extraFiles.map((extraFile, index) => {
+                      return new Promise((resolve, reject) => {
+                        const extraFilePath = path.join(filePath, extraFile);
+                        console.log("extraFilePath", extraFilePath);
+
+                        fs.access(extraFilePath, fs.constants.F_OK, (err) => {
+                          if (err) {
+                            return reject(
+                              new Error(
+                                `The file (${extraFile}) was defined as extra but was not found. Expected Path: ${extraFilePath}`
+                              )
+                            );
+                          } else {
+                            console.log("found extra file");
+                            returnValues[file].push(extraFilePath); 
+                            resolve();
+                          }
+                        });
+                      });
+                    });
+
+                    Promise.all(extraPromises)
+                      .then(() => resolve())
+                      .catch(reject);
+                  } else {
+                    resolve();
+                  }
                 }
               });
-
-              if (definitions.extraFiles.length) {
-                console.log("have extra files")
-                let i = 0;
-                definitions.extraFiles.forEach((extraFile) => {
-                  const extraFilePath = path.join(filePath, extraFile);
-                  console.log("extraFilePath", extraFilePath); 
-
-                  fs.access(extraFilePath, fs.constants.F_OK, (err) => {
-                    if (err) {
-                      return reject(
-                        new Error(
-                          `The file (${extraFile}) was defined as extra but was not found. Expected Path: ${extraFilePath}`
-                        )
-                      );
-                    } else {
-                      console.log("found extra file")
-                      i++;
-                      returnValues[file][i] = extraFilePath;
-                      return resolve();
-                    }
-                  });
-                });
-              }
             } else {
-              return resolve();
+              resolve();
             }
           });
         });

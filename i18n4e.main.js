@@ -1,6 +1,7 @@
+const process = require('process');
 const { getTranslationsPath } = require("./core/files.handler");
 const { previousLocalsMiddleware } = require("./core/middleware");
-
+const { createMainTranslationsRoute } = require("./core/route");
 
 function _getCallerFile() {
   try {
@@ -28,31 +29,8 @@ return undefined;
 const i18n4e = {
   languages: {},
   defaultLang: "en",
-  path: "/i18n4e/i/translations/",
+  path: "/i18n4e/i/translations",
   middleware: previousLocalsMiddleware,
-
-  route: () => {
-    return (req, res) => {
-      let lang = req.query.lang;
-      if (!lang) {
-        return res.status(404).json({ message: "Not found" });
-      }
-
-      let translations = require(i18n4e.languages[lang]);
-
-      if (!translations) {
-        lang = i18n4e.defaultLang;
-      }
-
-      translations = require(i18n4e.languages[lang]);
-
-      if (!lang || !translations) {
-        return res.status(404).json({ message: "Not found" });
-      }
-
-      res.json(translations);
-    };
-  },
 
   init: (
     app,
@@ -60,12 +38,13 @@ const i18n4e = {
       defaultLang: undefined,
       langsFolder: undefined,
       mainFile: undefined,
-      files: undefined,
+      extraFiles: undefined,
       previousLocalsMiddleware: true,
       i18n4ePath: undefined,
     },
     renderWithDocument = false
   ) => {
+
 
 
       const caller = _getCallerFile();
@@ -84,24 +63,28 @@ const i18n4e = {
       customPreferences.langsFolder = finalPath + "/langs";
     }
 
-    if (customPreferences.previousLocalsMiddleware) {
-      app.use(i18n4e.middleware);
-    }
+
 
     return getTranslationsPath(customPreferences)
       .then((returnValues) => {
-        app.use(`${i18n4e.path}/`, i18n4e.route());
+        
         i18n4e.languages = returnValues;
         console.log("i18n4e languages loaded", returnValues);
-        app.use(i18n4e.middleware);
+
+      //  if (customPreferences.previousLocalsMiddleware) {
+      //    app.use(i18n4e.middleware);
+      //    }
+
+
+      createMainTranslationsRoute(app,i18n4e.languages,i18n4e.path,i18n4e.defaultLang);
         console.log("Returned Values",returnValues);
         return returnValues;
       })
       .catch((err) => {
         
-        const messageError = "\n [i18n4e Error (On Init)] -> " + err.message + "\n";
+        const messageError = `\x1b[3m\x1b[34m[i18n4e\x1b[0m \x1b[31m\x1b[1mError\x1b[0m \x1b[3m\x1b[34m(On Init)]\x1b[0m  \x1b[33m-->\x1b[0m \x1b[31m\x1b[1m${err.message}\x1b[0m`;
         console.error(messageError);
-        throw new Error("i18n4e Init Error");
+        throw new Error("i18n4e (Init Error)");
       });
 
       
