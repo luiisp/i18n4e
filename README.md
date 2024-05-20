@@ -7,17 +7,6 @@
 
 i18n4e is a quick and easy way to add internationalization support to your Express Js application.
 
+## Loading.. 🚧
+This package is under development, please wait for the first release.
 
-## 🚀 Installation
-
-```bash
-npm install i18n4e
-```
-or 
-```bash
-yarn add i18n4e
-```
-
-## 📚 Docs
-
-To see the full documentation, please visit the [official documentation](https://luiisp.github.io/i18n4express).
