@@ -5,7 +5,7 @@
 ![GitHub license](https://img.shields.io/github/license/luiisp/i18n4e.svg)
 
 
-i18n4e is a quick and easy way to add internationalization support to your Express Js application.
+i18n4e is a package that offers a modern, quick and easy way to add internationalization support to your Express Js application.
 
 ## Loading.. 🚧
 This package is under development, please wait for the first release.
