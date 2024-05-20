@@ -3,9 +3,10 @@
   "compilerOptions": {
     "lib": ["ES2022", "DOM"],
     "target": "ES2022",
-    "module": "ESNext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "../lib/esm",
     "declarationDir": "../lib/esm/types"
-  }
+  },
+  "include": ["../i18n4e.main.ts","../core/**/*"]
 }

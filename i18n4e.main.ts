@@ -2,15 +2,15 @@ import * as process from 'process';
 import * as express from 'express';
 import { createMainTranslationsRoute } from './core/route';
 import { getLanguagesFilesPaths } from './core/files.handler';
-import { options, I18n4e } from './core/interfaces';
+import { options as optionsInterface, I18n4e } from './core/interfaces';
 
 const i18n4e: I18n4e = {
-  languages: {},
+  langsFilesPath: {},
   defaultLang: 'en',
   path: '/i18n4e/i/translations',
   init: (
     app: any,
-    options: options = {
+    options: optionsInterface = {
       defaultLang: undefined,
       langsFolder: undefined,
       mainFile: undefined,
@@ -27,7 +27,7 @@ const i18n4e: I18n4e = {
     if (options.previousLocalsMiddleware) {
       app.use((req: any, res: any, next: any) => {
         res.locals.i18n4e = {
-          languages: i18n4e.languages,
+          languages: i18n4e.langsFilesPath,
           defaultLang: i18n4e.defaultLang,
           path: i18n4e.path,
         };
@@ -48,17 +48,11 @@ const i18n4e: I18n4e = {
     }
 
     return getLanguagesFilesPaths(options)
-      .then((returnValues: any) => {
-        i18n4e.languages = returnValues;
+      .then((filesPaths: any) => {
+        i18n4e.langsFilesPath = filesPaths;
 
-        createMainTranslationsRoute(
-          app,
-          i18n4e.languages,
-          i18n4e.path,
-          i18n4e.defaultLang
-        );
-        console.log('Returned Values', returnValues);
-        return returnValues;
+        console.log('Returned Values', filesPaths);
+        return filesPaths;
       })
       .catch((err: Error) => {
         const messageError = `\x1b[3m\x1b[34m[i18n4e\x1b[0m \x1b[31m\x1b[1mError\x1b[0m \x1b[3m\x1b[34m(On Init)]\x1b[0m  \x1b[33m-->\x1b[0m \x1b[31m\x1b[1m${err.message}\x1b[0m`;

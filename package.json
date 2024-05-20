@@ -1,15 +1,15 @@
 {
   "name": "i18n4e",
-  "version": "1.0.0",
-  "description": "Internationalize express applications with the i18n standard",
-  "main": "dist/i18n4e.main.js",
-  "types": "dist/i18n4e.main.d.ts",
+  "version": "0.1.0",
+  "description": "i18n4e is a quick and easy way to add internationalization support to your Express Js application.",
+  "main": "lib/cjs/i18n4e.main.js",
+  "types": "./i18n4e.main.ts",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:server": "nodemon ./server/server.js",
-    "clean": "rm -rf ./lib",
+    "clean": "rimraf ./lib",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p ./config/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:esm": "tsc -p ./config/tsconfig.esm.json && shx mv lib/esm/index.js lib/esm/index.mjs",
     "build:cjs": "tsc -p ./config/tsconfig.cjs.json",
     "prepack": "npm run build",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
@@ -35,13 +35,13 @@
     "internationalization"
   ],
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "nodemon": "^3.1.0"
+    "ejs": "^3.1.10"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.7",
+    "shx": "^0.3.4"
   }
 }

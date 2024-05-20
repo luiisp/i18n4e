@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
-import { TranslationsRouteValues } from './interfaces';
+import { langsFilesPath } from './interfaces';
 
 const createMainTranslationsRoute = (
   app: express.Application,
-  values: TranslationsRouteValues,
+  values: langsFilesPath,
   path: string,
   defaultLang: string
 ) => {
