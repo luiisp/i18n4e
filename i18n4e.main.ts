@@ -4,6 +4,24 @@ import { createMainTranslationsRoute } from './core/route';
 import { getLanguagesFilesPaths } from './core/files.handler';
 import { options as optionsInterface, I18n4e } from './core/interfaces';
 
+
+function getCallerFile(position: number = 2): string | undefined {
+  // credits: https://github.com/stefanpenner/get-caller-file/blob/master/index.ts
+  if (position >= Error.stackTraceLimit) {
+    throw new TypeError('getCallerFile(position) requires position be less then Error.stackTraceLimit but position was: `' + position + '` and Error.stackTraceLimit was: `' + Error.stackTraceLimit + '`');
+  }
+
+  const oldPrepareStackTrace = Error.prepareStackTrace;
+  Error.prepareStackTrace = (_, stack)  => stack;
+  const stack = new Error().stack;
+  Error.prepareStackTrace = oldPrepareStackTrace;
+
+  if (stack !== null && typeof stack === 'object') {
+    return stack[position] ? (stack[position] as any).getFileName() : undefined;
+  }
+}
+
+
 const i18n4e: I18n4e = {
   langsFilesPath: {},
   defaultLang: 'en',
@@ -11,12 +29,12 @@ const i18n4e: I18n4e = {
   init: (
     app: any,
     options: optionsInterface = {
-      defaultLang: undefined,
-      langsFolder: undefined,
-      mainFile: undefined,
-      extraFiles: undefined,
-      previousLocalsMiddleware: true,
-      path: undefined,
+      defaultLang: undefined, // en
+      langsFolder: undefined, // _locales
+      mainFile: undefined, // translations.json
+      extraFiles: undefined, // []
+      previousLocalsMiddleware: true, // true
+      path: undefined, // /i18n4e/i/translations
     },
     renderWithDocument: boolean = false
   ): Promise<any> => {
@@ -27,7 +45,7 @@ const i18n4e: I18n4e = {
     if (options.previousLocalsMiddleware) {
       app.use((req: any, res: any, next: any) => {
         res.locals.i18n4e = {
-          languages: i18n4e.langsFilesPath,
+          languagesFilesPath: i18n4e.langsFilesPath,
           defaultLang: i18n4e.defaultLang,
           path: i18n4e.path,
         };
@@ -35,7 +53,7 @@ const i18n4e: I18n4e = {
       });
     }
 
-    const caller = (i18n4e.init as any).caller.toString();
+    const caller = getCallerFile(2);
     console.log('caller', caller);
     const callerPathParts = caller?.split('\\');
     const callerPathPartsNoLast = callerPathParts?.slice(0, -1);
