@@ -1,6 +1,6 @@
 import * as process from 'process';
 import express, { Request, Response, NextFunction } from 'express';
-import { createMainTranslationsRoute } from './core/route';
+import { wrapperAddTranslationsRoute } from './core/route';
 import * as path from 'path';
 import { getLanguagesFilesPaths } from './core/files.handler';
 import { options as optionsInterface, I18n4e } from './core/interfaces';
@@ -72,8 +72,15 @@ const i18n4e: I18n4e = {
     return getLanguagesFilesPaths(options)
       .then((filesPaths: any) => {
         i18n4e.langsFilesPath = filesPaths;
-
         console.log('Returned Values', filesPaths);
+
+        if (!renderBeforeDocument) {
+
+          wrapperAddTranslationsRoute(app, { i18n4e });
+
+        };
+
+
         return filesPaths;
       })
       .catch((err: Error) => {

@@ -20,7 +20,7 @@
     "url": "git+https://github.com/luiisp/i18n4e.git"
   },
   "author": "luisp",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/luiisp/i18n4e/issues"
   },
@@ -28,15 +28,13 @@
   "keywords": [
     "i18n",
     "ejs",
+    "express",
     "template",
     "translation",
     "localization",
     "simple",
     "internationalization"
   ],
-  "dependencies": {
-    "ejs": "^3.1.10"
-  },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",

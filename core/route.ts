@@ -1,33 +1,18 @@
 import express, { Request, Response } from 'express';
-import { langsFilesPath } from './interfaces';
 
-const createMainTranslationsRoute = (
-  app: express.Application,
-  values: langsFilesPath,
-  path: string,
-  defaultLang: string
-) => {
-  console.log('createMainTranslationsRoute', values);
-  console.log('createMainTranslationsRoute', path);
-  console.log('createMainTranslationsRoute', defaultLang);
 
-  app.get(`${path}/`, (req: Request, res: Response) => {
-    let requestedFiles: string[];
-    let lang: string = (req.query.lang as string) || defaultLang;
-    let requestedFilesQuery: string | undefined = req.query
-      .extrafiles as string;
+export const wrapperAddTranslationsRoute = (app: express.Application,args: any) => {
 
-    if (requestedFilesQuery) {
-      requestedFiles = requestedFilesQuery.split('/');
-    }
+  app.get(`${args.i18n4e.path}/`, (req: Request, res: Response) => {
 
-    let translationsFilesListPath: string[] = values[lang];
-    if (!requestedFilesQuery) {
-      requestedFiles = [translationsFilesListPath[0]];
-    }
+    let requestedFiles: string[] = (req.query.files as Array<string>) || [];
+    let lang: string = (req.query.lang as string) || args.i18n4e.defaultLang;
+
+    console.log( "requestedFiles", requestedFiles);
+    console.log( "lang", lang);
 
     return res.status(404).json({ message: 'Not found' });
+  
   });
-};
 
-export { createMainTranslationsRoute };
+};
