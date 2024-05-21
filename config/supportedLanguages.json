@@ -1,5 +1,5 @@
-[
-  {
+{
+ "suportedLanguages": [{
     "code": "af",
     "name": "Afrikaans"
   },
@@ -56,11 +56,11 @@
     "name": "Chichewa"
   },
   {
-    "code": "zh-CN",
+    "code": "zh_cn",
     "name": "Chinese (Simplified)"
   },
   {
-    "code": "zh-TW",
+    "code": "zh_tw",
     "name": "Chinese (Traditional)"
   },
   {
@@ -296,7 +296,7 @@
     "name": "Polish"
   },
   {
-    "code": "pt-BR",
+    "code": "pt_br",
     "name": "Portuguese (Brazil)"
   },
   {
@@ -430,5 +430,5 @@
   {
     "code": "zu",
     "name": "Zulu"
-  }
-]
+  }]
+}

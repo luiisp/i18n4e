@@ -1,11 +1,18 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import {suportedLanguages} from '../config/supportedLanguages.json';
 
 interface options {
   langsFolder?: string;
   mainFile?: string;
   extraFiles?: string[];
 }
+
+const folderNameIsALanguage = (folderName: string): boolean => {
+const isValid = suportedLanguages.find((lang) => lang.code === folderName || lang.name === folderName);
+return isValid ? true : false;
+};
+
 
 export const getLanguagesFilesPaths = (
   options: options = {}
@@ -20,7 +27,6 @@ export const getLanguagesFilesPaths = (
   definitions.path = definitions.path.replace(regex, path.sep);
 
   const langsFolder = path.join(definitions.path);
-  console.log('langsFolder', langsFolder);
   return new Promise((resolve, reject) => {
     fs.readdir(langsFolder, (err, files) => {
       if (err) {
@@ -31,9 +37,14 @@ export const getLanguagesFilesPaths = (
         );
       }
 
-      const returnValues: { [key: string]: string[] } = {};
+      const returnFilesPathValues: { [key: string]: string[] } = {};
       const promises = files.map((file) => {
         return new Promise((resolve, reject) => {
+          if (!folderNameIsALanguage(file)) {
+            return reject(
+              new Error(`The folder (${file}) is not a valid language folder. Consult the i18n4e supported languages list.`)
+            );
+          }
           const filePath = path.join(langsFolder, file);
 
           fs.stat(filePath, (err, stats) => {
@@ -48,8 +59,8 @@ export const getLanguagesFilesPaths = (
                 filePath,
                 definitions.mainFile
               );
-              console.log('mainTranslationFilePath', mainTranslationFilePath);
 
+              
               fs.access(mainTranslationFilePath, fs.constants.F_OK, (err) => {
                 if (err) {
                   return reject(
@@ -58,10 +69,9 @@ export const getLanguagesFilesPaths = (
                     )
                   );
                 } else {
-                  returnValues[file] = [mainTranslationFilePath];
+                  returnFilesPathValues[file] = [mainTranslationFilePath];
 
                   if (definitions.extraFiles.length) {
-                    console.log('have extra files');
 
                     const extraPromises = definitions.extraFiles.map(
                       (extraFile) => {
@@ -77,9 +87,8 @@ export const getLanguagesFilesPaths = (
                                 )
                               );
                             } else {
-                              console.log('found extra file');
-                              returnValues[file].push(extraFilePath);
-                              resolve(returnValues);
+                              returnFilesPathValues[file].push(extraFilePath);
+                              resolve(returnFilesPathValues);
                             }
                           });
                         });
@@ -87,22 +96,22 @@ export const getLanguagesFilesPaths = (
                     );
 
                     Promise.all(extraPromises)
-                      .then(() => resolve(returnValues))
+                      .then(() => resolve(returnFilesPathValues))
                       .catch(reject);
                   } else {
-                    resolve(returnValues);
+                    resolve(returnFilesPathValues);
                   }
                 }
               });
             } else {
-              resolve(returnValues);
+              resolve(returnFilesPathValues);
             }
           });
         });
       });
 
       Promise.all(promises)
-        .then(() => resolve(returnValues))
+        .then(() => resolve(returnFilesPathValues))
         .catch((err) => reject(err));
     });
   });
