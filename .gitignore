@@ -1,4 +1,4 @@
-/node_modules
-/server
-/lib 
+node_modules/
+server/
+lib/
 *.html
