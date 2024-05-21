@@ -9,8 +9,7 @@
     "declaration": true,
     "declarationMap": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    
+    "resolveJsonModule": true
   },
   "files": ["./i18n4e.main.ts"]
 }

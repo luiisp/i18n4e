@@ -11,15 +11,18 @@ export interface options {
   extraFiles?: string[];
   previousLocalsMiddleware?: boolean;
   path?: string;
+  renderWithDocument?: boolean;
 }
 
 export interface I18n4e {
   langsFilesPath: langsFilesPath;
   defaultLang: string;
   path: string;
-  init: (
-    app: express.Application,
-    options?: options,
-    renderWithDocument?: boolean
-  ) => Promise<any>;
+  init: (app: express.Application, options?: options) => Promise<any>;
+}
+
+export interface minFilesOptions {
+  langsFolder?: string;
+  mainFile?: string;
+  extraFiles?: string[];
 }

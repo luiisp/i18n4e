@@ -1,21 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {suportedLanguages} from '../config/supportedLanguages.json';
-
-interface options {
-  langsFolder?: string;
-  mainFile?: string;
-  extraFiles?: string[];
-}
-
-const folderNameIsALanguage = (folderName: string): boolean => {
-const isValid = suportedLanguages.find((lang) => lang.code === folderName || lang.name === folderName);
-return isValid ? true : false;
-};
-
+import { minFilesOptions } from './interfaces';
+import { folderNameIsALanguage } from './utils/utils.main';
 
 export const getLanguagesFilesPaths = (
-  options: options = {}
+  options: minFilesOptions = {}
 ): Promise<{ [key: string]: string[] }> => {
   const regex = /\/|\\/g;
   const definitions = {
@@ -42,7 +31,9 @@ export const getLanguagesFilesPaths = (
         return new Promise((resolve, reject) => {
           if (!folderNameIsALanguage(file)) {
             return reject(
-              new Error(`The folder (${file}) is not a valid language folder. Consult the i18n4e supported languages list.`)
+              new Error(
+                `The folder (${file}) is not a valid language folder. Consult the i18n4e supported languages list.`
+              )
             );
           }
           const filePath = path.join(langsFolder, file);
@@ -60,7 +51,6 @@ export const getLanguagesFilesPaths = (
                 definitions.mainFile
               );
 
-              
               fs.access(mainTranslationFilePath, fs.constants.F_OK, (err) => {
                 if (err) {
                   return reject(
@@ -72,12 +62,10 @@ export const getLanguagesFilesPaths = (
                   returnFilesPathValues[file] = [mainTranslationFilePath];
 
                   if (definitions.extraFiles.length) {
-
                     const extraPromises = definitions.extraFiles.map(
                       (extraFile) => {
                         return new Promise((resolve, reject) => {
                           const extraFilePath = path.join(filePath, extraFile);
-                          console.log('extraFilePath', extraFilePath);
 
                           fs.access(extraFilePath, fs.constants.F_OK, (err) => {
                             if (err) {
