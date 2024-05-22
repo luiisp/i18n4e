@@ -4,7 +4,7 @@ import { wrapperAddTranslationsRoute } from './core/routes';
 import * as path from 'path';
 import { getLanguagesFilesPaths } from './core/files.handler';
 import { options as optionsInterface, I18n4e } from './core/interfaces';
-import { wrapperPreviousLocalsMiddleware as previousLocalsMiddleware } from './core/middleware';
+import { i18nServerSideMiddlewareWrapper } from './core/middleware';
 
 function getCallerFile(position: number = 2): string | undefined {
   // credits: https://github.com/stefanpenner/get-caller-file/blob/master/index.ts
@@ -39,18 +39,16 @@ const i18n4e: I18n4e = {
       langsFolder: undefined,
       mainFile: undefined,
       extraFiles: undefined,
-      previousLocalsMiddleware: true,
       path: undefined,
     },
-    renderBeforeDocument: boolean = false
+    serverSideTranslation: boolean = false
   ): Promise<any> => {
+
+
     if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
     if (options.path) i18n4e.path = options.path;
 
-    if (options.previousLocalsMiddleware) {
-      app.use(previousLocalsMiddleware({ i18n4e }));
-    }
 
     const caller = getCallerFile(2);
     const callerPathParts = caller?.split('\\');
@@ -68,18 +66,16 @@ const i18n4e: I18n4e = {
     } else {
       options.langsFolder = finalPath + '/_locales';
     }
-
-    return getLanguagesFilesPaths(options)
+    if (serverSideTranslation) i18nServerSideMiddlewareWrapper({app: app, i18n4e: i18n4e});
+    
+    return getLanguagesFilesPaths(options,serverSideTranslation)
       .then((filesPaths: any) => {
         i18n4e.langsFilesPath = filesPaths;
         console.log('Returned Values', filesPaths);
 
-        if (!renderBeforeDocument) {
-
-          wrapperAddTranslationsRoute(app, { i18n4e });
-
-        };
-
+        if (!serverSideTranslation){
+          wrapperAddTranslationsRoute(app, { i18n4e: i18n4e });
+        }
 
         return filesPaths;
       })

@@ -36,6 +36,7 @@
     "internationalization"
   ],
   "devDependencies": {
+    "@types/cheerio": "^0.22.35",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
     "prettier": "^3.2.5",
@@ -43,6 +44,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@types/jest": "^29.5.12"
+    "@types/jest": "^29.5.12",
+    "cheerio": "^1.0.0-rc.12"
   }
 }

@@ -2,11 +2,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { minFilesOptions } from './interfaces';
 import { folderNameIsALanguage } from './utils/utils.main';
+import { serverSideConfigs } from './server-side.config';
 
 
 
 export const getLanguagesFilesPaths = (
-  options: minFilesOptions = {}
+  options: minFilesOptions = {},
+  serverSideTranslation: boolean = false
 ): Promise<{ [key: string]: string[] }> => {
   const regex = /\/|\\/g;
   const definitions = {
@@ -40,6 +42,33 @@ export const getLanguagesFilesPaths = (
           }
           const filePath = path.join(langsFolder, file);
 
+          if (serverSideTranslation){
+            const serverSideMainFilePath = path.join(filePath, "server-side-translation.config.json");
+            fs.access(serverSideMainFilePath, fs.constants.F_OK, (err) => {
+              if (!err) {
+                const serverSideMainFileJSON = fs.readFileSync(serverSideMainFilePath, 'utf8');
+                const serverSideMainFileParsed = JSON.parse(serverSideMainFileJSON);
+                
+
+                if (serverSideMainFileParsed.useAllExtraFiles){
+                  serverSideConfigs.useAllExtraFiles = true;
+                }
+
+                if (serverSideMainFileParsed.removeTagAfterTranslation){
+                  serverSideConfigs.removeTagAfterTranslation = true;
+                }
+
+                if (serverSideMainFileParsed.extraFiles){
+                  serverSideConfigs.extraFiles = serverSideMainFileParsed.extraFiles;
+                }
+              }else{
+                serverSideConfigs.optionsServerSide = false;
+              }
+
+            });
+          
+          }
+
           fs.stat(filePath, (err, stats) => {
             if (err) {
               return reject(
@@ -62,6 +91,7 @@ export const getLanguagesFilesPaths = (
                   );
                 } else {
                   returnFilesPathValues[file] = [mainTranslationFilePath];
+                  
 
                   if (definitions.extraFiles.length) {
                     const extraPromises = definitions.extraFiles.map(

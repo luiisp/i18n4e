@@ -9,9 +9,17 @@ export interface options {
   langsFolder?: string;
   mainFile?: string;
   extraFiles?: string[];
-  previousLocalsMiddleware?: boolean;
   path?: string;
   renderWithDocument?: boolean;
+}
+
+
+export interface optionsServerSide{
+  optionsServerSide?: boolean; 
+  useAllExtraFiles?: boolean;
+  removeTagAfterTranslation?: boolean;
+  extraFiles?: string[];
+
 }
 
 export interface I18n4e {
