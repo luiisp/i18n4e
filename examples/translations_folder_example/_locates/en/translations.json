@@ -1,0 +1,17 @@
+{
+  "hello-msg": {
+    "message": "Hello!"
+  },
+  "goodbye-msg": {
+    "message": "Goodbye!"
+  },
+  "welcome-msg": {
+    "message": "Welcome!"
+  },
+  "good-morning-msg": {
+    "message": "Good morning!"
+  },
+  "good-afternoon-msg": {
+    "message": "Good afternoon!"
+  }
+}

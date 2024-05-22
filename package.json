@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf ./lib",
-    "test:server": "cd ../server && code . && npm run dev",
+    "test:server": "cls && npm run clean && npm run build:esm && npm run build:cjs && cd ../server && code . && npm run dev",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p ./config/tsconfig.esm.json && shx mv lib/esm/i18n4e.main.js lib/esm/i18n4e.main.mjs",
     "build:cjs": "tsc -p ./config/tsconfig.cjs.json",
@@ -41,5 +41,8 @@
     "prettier": "^3.2.5",
     "rimraf": "^5.0.7",
     "shx": "^0.3.4"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.12"
   }
 }

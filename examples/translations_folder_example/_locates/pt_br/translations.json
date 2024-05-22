@@ -1,0 +1,17 @@
+{
+  "hello-msg": {
+    "message": "Olá!"
+  },
+  "goodbye-msg": {
+    "message": "Tchau!"
+  },
+  "welcome-msg": {
+    "message": "Bem vindo!"
+  },
+  "good-morning-msg": {
+    "message": "Bom dia!"
+  },
+  "good-afternoon-msg": {
+    "message": "Boa tarde!"
+  }
+}

@@ -1,6 +1,6 @@
 import * as process from 'process';
 import express, { Request, Response, NextFunction } from 'express';
-import { wrapperAddTranslationsRoute } from './core/route';
+import { wrapperAddTranslationsRoute } from './core/routes';
 import * as path from 'path';
 import { getLanguagesFilesPaths } from './core/files.handler';
 import { options as optionsInterface, I18n4e } from './core/interfaces';

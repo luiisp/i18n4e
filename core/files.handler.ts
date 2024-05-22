@@ -3,6 +3,8 @@ import * as path from 'path';
 import { minFilesOptions } from './interfaces';
 import { folderNameIsALanguage } from './utils/utils.main';
 
+
+
 export const getLanguagesFilesPaths = (
   options: minFilesOptions = {}
 ): Promise<{ [key: string]: string[] }> => {
@@ -103,4 +105,23 @@ export const getLanguagesFilesPaths = (
         .catch((err) => reject(err));
     });
   });
+};
+
+
+export const returnVarTranslationsFromFiles = (
+  langFilesPaths: string[],
+) =>{
+
+  let varTranslationsFromFiles: { [key: string]: any; } = {};
+  langFilesPaths.forEach((file) => {
+    const fileJSON = fs.readFileSync(file, 'utf8');
+    const fileParsed = JSON.parse(fileJSON);
+    Object.entries(fileParsed).forEach(([key, value]: [string, any]) => { 
+      varTranslationsFromFiles[key] = value.message;
+
+    });
+  });
+
+  return varTranslationsFromFiles;
+
 };
