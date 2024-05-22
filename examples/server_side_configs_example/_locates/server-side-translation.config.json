@@ -1,12 +1,10 @@
 {
-    "useAllExtraFiles":false,
-    "removeTagAfterTranslation":true,
-    "extraFiles":[
-        {
-            "name":"index.html",
-            "files":["menu","home","footer"]
-        }
-
-
-    ]
+  "useAllExtraFiles": false,
+  "removeTagAfterTranslation": true,
+  "extraFiles": [
+    {
+      "name": "index.html",
+      "files": ["menu", "home", "footer"]
+    }
+  ]
 }

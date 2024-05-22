@@ -13,13 +13,11 @@ export interface options {
   renderWithDocument?: boolean;
 }
 
-
-export interface optionsServerSide{
-  optionsServerSide?: boolean; 
+export interface optionsServerSide {
+  optionsServerSide?: boolean;
   useAllExtraFiles?: boolean;
   removeTagAfterTranslation?: boolean;
   extraFiles?: string[];
-
 }
 
 export interface I18n4e {

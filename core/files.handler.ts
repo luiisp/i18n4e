@@ -4,8 +4,6 @@ import { minFilesOptions } from './interfaces';
 import { folderNameIsALanguage } from './utils/utils.main';
 import { serverSideConfigs } from './server-side.config';
 
-
-
 export const getLanguagesFilesPaths = (
   options: minFilesOptions = {},
   serverSideTranslation: boolean = false
@@ -42,31 +40,37 @@ export const getLanguagesFilesPaths = (
           }
           const filePath = path.join(langsFolder, file);
 
-          if (serverSideTranslation){
-            const serverSideMainFilePath = path.join(filePath, "server-side-translation.config.json");
+          if (serverSideTranslation) {
+            const serverSideMainFilePath = path.join(
+              filePath,
+              'server-side-translation.config.json'
+            );
             fs.access(serverSideMainFilePath, fs.constants.F_OK, (err) => {
               if (!err) {
-                const serverSideMainFileJSON = fs.readFileSync(serverSideMainFilePath, 'utf8');
-                const serverSideMainFileParsed = JSON.parse(serverSideMainFileJSON);
-                
+                const serverSideMainFileJSON = fs.readFileSync(
+                  serverSideMainFilePath,
+                  'utf8'
+                );
+                const serverSideMainFileParsed = JSON.parse(
+                  serverSideMainFileJSON
+                );
 
-                if (serverSideMainFileParsed.useAllExtraFiles){
+                if (serverSideMainFileParsed.useAllExtraFiles) {
                   serverSideConfigs.useAllExtraFiles = true;
                 }
 
-                if (serverSideMainFileParsed.removeTagAfterTranslation){
+                if (serverSideMainFileParsed.removeTagAfterTranslation) {
                   serverSideConfigs.removeTagAfterTranslation = true;
                 }
 
-                if (serverSideMainFileParsed.extraFiles){
-                  serverSideConfigs.extraFiles = serverSideMainFileParsed.extraFiles;
+                if (serverSideMainFileParsed.extraFiles) {
+                  serverSideConfigs.extraFiles =
+                    serverSideMainFileParsed.extraFiles;
                 }
-              }else{
+              } else {
                 serverSideConfigs.optionsServerSide = false;
               }
-
             });
-          
           }
 
           fs.stat(filePath, (err, stats) => {
@@ -91,7 +95,6 @@ export const getLanguagesFilesPaths = (
                   );
                 } else {
                   returnFilesPathValues[file] = [mainTranslationFilePath];
-                  
 
                   if (definitions.extraFiles.length) {
                     const extraPromises = definitions.extraFiles.map(
@@ -137,21 +140,15 @@ export const getLanguagesFilesPaths = (
   });
 };
 
-
-export const returnVarTranslationsFromFiles = (
-  langFilesPaths: string[],
-) =>{
-
-  let varTranslationsFromFiles: { [key: string]: any; } = {};
+export const returnVarTranslationsFromFiles = (langFilesPaths: string[]) => {
+  let varTranslationsFromFiles: { [key: string]: any } = {};
   langFilesPaths.forEach((file) => {
     const fileJSON = fs.readFileSync(file, 'utf8');
     const fileParsed = JSON.parse(fileJSON);
-    Object.entries(fileParsed).forEach(([key, value]: [string, any]) => { 
+    Object.entries(fileParsed).forEach(([key, value]: [string, any]) => {
       varTranslationsFromFiles[key] = value.message;
-
     });
   });
 
   return varTranslationsFromFiles;
-
 };

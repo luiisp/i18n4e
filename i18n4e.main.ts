@@ -43,12 +43,9 @@ const i18n4e: I18n4e = {
     },
     serverSideTranslation: boolean = false
   ): Promise<any> => {
-
-
     if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
     if (options.path) i18n4e.path = options.path;
-
 
     const caller = getCallerFile(2);
     const callerPathParts = caller?.split('\\');
@@ -66,14 +63,15 @@ const i18n4e: I18n4e = {
     } else {
       options.langsFolder = finalPath + '/_locales';
     }
-    if (serverSideTranslation) i18nServerSideMiddlewareWrapper({app: app, i18n4e: i18n4e});
-    
-    return getLanguagesFilesPaths(options,serverSideTranslation)
+    if (serverSideTranslation)
+      i18nServerSideMiddlewareWrapper({ app: app, i18n4e: i18n4e });
+
+    return getLanguagesFilesPaths(options, serverSideTranslation)
       .then((filesPaths: any) => {
         i18n4e.langsFilesPath = filesPaths;
         console.log('Returned Values', filesPaths);
 
-        if (!serverSideTranslation){
+        if (!serverSideTranslation) {
           wrapperAddTranslationsRoute(app, { i18n4e: i18n4e });
         }
 
