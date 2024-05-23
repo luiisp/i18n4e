@@ -1,17 +1,17 @@
 {
-  "hello-msg": {
-    "message": "¡Hola!"
-  },
-  "goodbye-msg": {
-    "message": "¡Adiós!"
-  },
-  "welcome-msg": {
-    "message": "¡Bienvenido!"
-  },
-  "good-morning-msg": {
-    "message": "¡Buenos días!"
-  },
-  "good-afternoon-msg": {
-    "message": "¡Buenas tardes!"
-  }
+	"hello-msg": {
+		"message": "¡Hola!"
+	},
+	"goodbye-msg": {
+		"message": "¡Adiós!"
+	},
+	"welcome-msg": {
+		"message": "¡Bienvenido!"
+	},
+	"good-morning-msg": {
+		"message": "¡Buenos días!"
+	},
+	"good-afternoon-msg": {
+		"message": "¡Buenas tardes!"
+	}
 }

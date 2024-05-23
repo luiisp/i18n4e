@@ -1,18 +1,18 @@
 {
-  "useAllExtraFiles": false,
-  "removeTagAfterTranslation": true,
-  "extraFiles": [
-    {
-      "name": "index",
-      "files": ["menu", "home", "footer"]
-    },
-    {
-      "name": "page",
-      "files": ["menu", "home", "footer"]
-    },
-    {
-      "name": "credits",
-      "files": ["menu", "home", "footer"]
-    }
-  ]
+	"useAllExtraFiles": false,
+	"removeTagAfterTranslation": true,
+	"extraFiles": [
+		{
+			"name": "index",
+			"files": ["menu", "home", "footer"]
+		},
+		{
+			"name": "page",
+			"files": ["menu", "home", "footer"]
+		},
+		{
+			"name": "credits",
+			"files": ["menu", "home", "footer"]
+		}
+	]
 }

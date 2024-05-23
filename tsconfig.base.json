@@ -1,15 +1,15 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "checkJs": true,
-    "allowJs": true,
-    "declaration": true,
-    "declarationMap": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
-  },
-  "files": ["./i18n4e.main.ts"]
+	"compilerOptions": {
+		"strict": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"checkJs": true,
+		"allowJs": true,
+		"declaration": true,
+		"declarationMap": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true
+	},
+	"files": ["./i18n4e.main.ts"]
 }
