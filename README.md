@@ -9,6 +9,8 @@
 [![yarn](https://img.shields.io/badge/yarn-1.0.0-blue.svg)](https://yarnpkg.com/en/package/i18n4e)
 ![GitHub license](https://img.shields.io/github/license/luiisp/i18n4e.svg)
 
+> Please do not download this package yet, the source files are being developed, the first stable release will be released soon!
+
 
 i18n4e is a package that offers a modern, quick and easy way to add internationalization support to your Express Js application.
 
