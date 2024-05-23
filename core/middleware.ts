@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 import { I18n4e } from './interfaces';
-import { createProxyMiddleware } from 'http-proxy-middleware';
 import cheerio from 'cheerio';
 import { serverSideConfigs } from './server-side.config';
 
