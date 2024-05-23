@@ -3,10 +3,10 @@ import express from 'express';
 import * as path from 'path';
 import { wrapperAddTranslationsRoute } from './src/routes';
 import { getLanguagesFilesPaths } from './src/files.handler';
-import { options as optionsInterface, I18n4e, InitOptions } from './src/interfaces';
+import { I18n4e, InitOptions } from './src/interfaces';
 import { i18nServerSideMiddlewareWrapper } from './src/middleware';
 
-function getCallerFile(position: number = 2): string | undefined {
+const getCallerFile = (position: number = 2): string | undefined => {
 	if (position >= Error.stackTraceLimit) {
 		throw new TypeError(
 			'getCallerFile(position) requires position be less then Error.stackTraceLimit but position was: `' +
@@ -22,9 +22,8 @@ function getCallerFile(position: number = 2): string | undefined {
 	const stack = new Error().stack;
 	Error.prepareStackTrace = oldPrepareStackTrace;
 
-	if (stack !== null && typeof stack === 'object') {
-		return stack[position] ? (stack[position] as any).getFileName() : undefined;
-	}
+	if (stack !== null && typeof stack === 'object') return stack[position] ? (stack[position] as any).getFileName() : undefined;
+
 }
 
 const i18n4e: I18n4e = {
@@ -47,25 +46,18 @@ const i18n4e: I18n4e = {
 
 		if (!finalPath) throw new Error('i18n4e (Init Error): Unable to get caller path.');
 
-		if (options.langsFolder) {
-			options.langsFolder = path.resolve(finalPath || './', options.langsFolder);
-		} else {
-			options.langsFolder = finalPath + '/_locales';
-		}
+    options.langsFolder = options.langsFolder 
+        ? path.resolve(finalPath || './', options.langsFolder)
+        : finalPath + '/_locales';
 		i18n4e.locatesFolder = options.langsFolder;
-		if (serverSideTranslation) {
-			i18nServerSideMiddlewareWrapper(app, i18n4e);
-		}
+		if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e);
+			
 
 		return getLanguagesFilesPaths(options, serverSideTranslation)
 			.then((filesPaths: any) => {
 				i18n4e.langsFilesPath = filesPaths;
-				console.log('Returned Values', filesPaths);
-
-				if (!serverSideTranslation) {
-					wrapperAddTranslationsRoute(app, { i18n4e: i18n4e });
-				}
-
+				if (!serverSideTranslation) wrapperAddTranslationsRoute(app, { i18n4e: i18n4e });
+					
 				return filesPaths;
 			})
 			.catch((err: Error) => {
