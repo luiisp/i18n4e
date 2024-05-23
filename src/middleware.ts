@@ -16,6 +16,8 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 			callback?: (err: Error, html: string) => void
 		) => {
 			console.log('Rendering view: ', view);
+			let err: Error | null = null; 
+			if (err) return next(err);
 
 			let extraFiles: string[] = [];
 			if (serverSideConfigs.extraFiles) {
@@ -27,6 +29,7 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 			}
 
 			originalRender(view, options, (err, html) => {
+				console.log('Original render called');
 				if (err) return next(err);
 				const $ = cheerio.load(html);
 				let userLang = (
@@ -52,21 +55,12 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 				}
 				console.log('User language: ', userLang);
 
-				//   const i18nIDs = $('[i18nID]')
-				//   i18nIDs.each((index, element) => {
-				//     $(element).text("TEste");
-				//     $(element).removeAttr('i18nID');
-				//   });
+				
 
-				//    console.log(i18nIDs)
-
-				//    console.log("1 HTML:\n", html);
-				//    console.log("2 HTML:\n", $.html());
-
+				console.log('Sending modified HTML');
 				res.send($.html());
 			});
-
-			next();
 		};
+		next();
 	});
 };

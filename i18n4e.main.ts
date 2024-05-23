@@ -35,6 +35,7 @@ const i18n4e: I18n4e = {
 		app: express.Application,
 		{ options = {}, serverSideTranslation = false }: InitOptions = {}
 	): Promise<any> => {
+    if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e);
 		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
 		if (options.path) i18n4e.path = options.path;
@@ -50,7 +51,7 @@ const i18n4e: I18n4e = {
         ? path.resolve(finalPath || './', options.langsFolder)
         : finalPath + '/_locales';
 		i18n4e.locatesFolder = options.langsFolder;
-		if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e);
+
 			
 
 		return getLanguagesFilesPaths(options, serverSideTranslation)
