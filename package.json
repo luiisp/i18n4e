@@ -2,8 +2,9 @@
 	"name": "@luiisp/i18n4e",
 	"version": "0.2.8",
 	"description": "i18n4e is a quick and easy way to add internationalization support to your Express Js application.",
-	"main": "lib/cjs/i18n4e.main.js",
-	"types": "lib/esm/i18n4e.main.ts",
+	"main": "lib/cjs/src/i18n4e.main.js",
+	"module": "lib/esm/src/i18n4e.main.mjs",
+	"types": "lib/esm/src/types/src/i18n4e.main.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"clean": "rimraf ./lib",

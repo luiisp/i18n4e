@@ -70,4 +70,5 @@ const i18n4e: I18n4e = {
 	},
 };
 
-export { i18n4e };
+
+export default i18n4e;
