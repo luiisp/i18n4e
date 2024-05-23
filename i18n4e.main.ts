@@ -1,10 +1,10 @@
 import * as process from 'process';
 import express from 'express';
 import * as path from 'path';
-import { wrapperAddTranslationsRoute } from './core/routes';
-import { getLanguagesFilesPaths } from './core/files.handler';
-import { options as optionsInterface, I18n4e, InitOptions } from './core/interfaces';
-import { i18nServerSideMiddlewareWrapper } from './core/middleware';
+import { wrapperAddTranslationsRoute } from './src/routes';
+import { getLanguagesFilesPaths } from './src/files.handler';
+import { options as optionsInterface, I18n4e, InitOptions } from './src/interfaces';
+import { i18nServerSideMiddlewareWrapper } from './src/middleware';
 
 function getCallerFile(position: number = 2): string | undefined {
 	if (position >= Error.stackTraceLimit) {
