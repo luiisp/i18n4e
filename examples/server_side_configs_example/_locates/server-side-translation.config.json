@@ -3,7 +3,15 @@
   "removeTagAfterTranslation": true,
   "extraFiles": [
     {
-      "name": "index.html",
+      "name": "index",
+      "files": ["menu", "home", "footer"]
+    },
+    {
+      "name": "page",
+      "files": ["menu", "home", "footer"]
+    },
+    {
+      "name": "credits",
       "files": ["menu", "home", "footer"]
     }
   ]

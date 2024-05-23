@@ -1,4 +1,4 @@
-import { optionsServerSide } from './interfaces';
+import { optionsServerSide, ExtraFile } from './interfaces';
 
 export const serverSideConfigs: optionsServerSide = {
   optionsServerSide: false,

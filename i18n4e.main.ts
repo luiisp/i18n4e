@@ -31,6 +31,7 @@ function getCallerFile(position: number = 2): string | undefined {
 const i18n4e: I18n4e = {
   langsFilesPath: {},
   defaultLang: 'en',
+  locatesFolder: "",
   path: '/i18n4e/i/translations',
   init: (
     app: any,
@@ -63,6 +64,7 @@ const i18n4e: I18n4e = {
     } else {
       options.langsFolder = finalPath + '/_locales';
     }
+    i18n4e.locatesFolder = options.langsFolder;
     if (serverSideTranslation){ 
       i18nServerSideMiddlewareWrapper(app,i18n4e);
     };
