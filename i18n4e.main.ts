@@ -63,8 +63,10 @@ const i18n4e: I18n4e = {
     } else {
       options.langsFolder = finalPath + '/_locales';
     }
-    if (serverSideTranslation)
+    if (serverSideTranslation){ 
       i18nServerSideMiddlewareWrapper(app,i18n4e);
+    };
+     
 
     return getLanguagesFilesPaths(options, serverSideTranslation)
       .then((filesPaths: any) => {
