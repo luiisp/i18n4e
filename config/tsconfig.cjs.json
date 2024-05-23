@@ -8,5 +8,5 @@
 		"outDir": "../lib/cjs",
 		"declarationDir": "../lib/cjs/types"
 	},
-	"include": ["../i18n4e.main.ts", "../src/**/*"]
+	"include": ["../src/i18n4e.main.ts", "../src/**/*"]
 }

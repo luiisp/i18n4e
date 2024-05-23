@@ -53,6 +53,18 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 				for (const key in mainFile) {
 					$('[i18nID="' + key + '"]').text(mainFile[key].message);
 				}
+
+				if (extraFiles.length > 0) {
+					console.log("have extra files")
+					extraFiles.forEach((file) => {
+						const extraFile = JSON.parse(fs.readFileSync(file, 'utf8'));
+						console.log('Extra file: ', extraFile);
+						for (const key in extraFile) {
+							$('[i18nID="' + key + '"]').text(extraFile[key].message);
+						}
+					});
+				}
+
 				console.log('User language: ', userLang);
 
 				

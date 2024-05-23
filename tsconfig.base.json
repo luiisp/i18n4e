@@ -11,5 +11,5 @@
 		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true
 	},
-	"files": ["./i18n4e.main.ts"]
+	"files": ["./src/i18n4e.main.ts"]
 }

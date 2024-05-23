@@ -1,25 +1,28 @@
 {
-	"name": "i18n4e",
-	"version": "0.1.0",
+	"name": "@luiisp/i18n4e",
+	"version": "0.2.8",
 	"description": "i18n4e is a quick and easy way to add internationalization support to your Express Js application.",
 	"main": "lib/cjs/i18n4e.main.js",
-	"types": "./i18n4e.main.ts",
+	"types": "lib/esm/i18n4e.main.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"clean": "rimraf ./lib",
 		"test:server": "cls && npm run clean && npm run build:esm && npm run build:cjs && cd ../server && code . && npm run dev",
 		"build": "npm run clean && npm run build:esm && npm run build:cjs",
-		"build:esm": "tsc -p ./config/tsconfig.esm.json && shx mv lib/esm/i18n4e.main.js lib/esm/i18n4e.main.mjs",
+		"build:esm": "tsc -p ./config/tsconfig.esm.json && shx mv lib/esm/src/i18n4e.main.js lib/esm/src/i18n4e.main.mjs",
 		"build:cjs": "tsc -p ./config/tsconfig.cjs.json",
 		"prepack": "npm run build",
 		"format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
 		"format:check": "prettier --check \"./**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
 	},
+	"publishConfig": {
+		"registry":"https://npm.pkg.github.com/"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/luiisp/i18n4e.git"
 	},
-	"author": "luisp",
+	"author": "luiisp",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/luiisp/i18n4e/issues"
