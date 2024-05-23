@@ -43,7 +43,7 @@ export const getLanguagesFilesPaths = (
 					if (serverSideTranslation) {
 						const serverSideMainFilePath = path.join(
 							filePath,
-							'server-side-translation.config.json'
+							'sst.config.json'
 						);
 						fs.access(serverSideMainFilePath, fs.constants.F_OK, (err) => {
 							if (!err) {

@@ -17,3 +17,29 @@ i18n4e is a package that offers a modern, quick and easy way to add internationa
 ## Loading.. 🚧
 This package is under development, please wait for the first release.
 
+## 🚀 Installation
+```bash
+npm install i18n4e
+```
+or 
+
+```bash
+yarn add i18n4e
+```
+
+### For client-side:
+> Only if using client side translation mode **(CST)**
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/i18n4e/client-dist/i18n4e.min.js"></script>
+```
+
+or 
+
+```html
+<script src="/node_modules/i18n4e/client-dist/i18n4e.min.js"></script>
+```
+
+## 📚 Docs
+
+To see the full documentation, please visit the [official documentation](https://luiisp.github.io/i18n4express).

@@ -24,9 +24,14 @@
 		"url": "git+https://github.com/luiisp/i18n4e.git"
 	},
 	"author": "luiisp",
+	"icon": "https://raw.githubusercontent.com/luiisp/i18n4e-docs/main/__ico__/i18n4e_128.png",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/luiisp/i18n4e/issues"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://www.patreon.com/luiisp"
 	},
 	"homepage": "https://github.com/luiisp/i18n4e#readme",
 	"keywords": [
