@@ -1,5 +1,4 @@
 {
-	"useAllExtraFiles": false,
 	"removeTagAfterTranslation": true,
 	"extraFiles": [
 		{
@@ -13,6 +12,10 @@
 		{
 			"name": "credits",
 			"files": ["menu", "home", "footer"]
+		}
+		{
+			"name": "*",
+			"files":["alltranslation"]
 		}
 	]
 }
