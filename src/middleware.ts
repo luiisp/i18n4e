@@ -4,8 +4,16 @@ import * as path from 'path';
 import { I18n4e } from './interfaces';
 import cheerio from 'cheerio';
 import { serverSideConfigs } from './server-side.config';
+import NodeCache from 'node-cache';
+
+
 
 export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e: I18n4e) => {
+	
+	const htmlCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
+
+
+	
 	app.use((req: Request, res: Response, next: NextFunction) => {
 		const originalRender = res.render.bind(res);
 		let userLang: string;
@@ -25,14 +33,22 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 			options: any,
 			callback?: (err: Error, html: string) => void
 		) => {
-			console.log('\nRendering the view view -->', view);
+			console.log('\nRendering the view view -->', view)
+
 			let err: Error | null = null; 
 			if (err) return next(err);
+
+			const cacheKey = `${view}-${userLang}`;
+            const cachedHtml = htmlCache.get(cacheKey);
+            if (cachedHtml) {
+                console.log('Serving from cache');
+                return res.send(cachedHtml as string);
+            }
 
 			let extraFiles: string[] = [];
 			if (serverSideConfigs.extraFiles && serverSideConfigs.extraFiles.length > 0) {
 				console.log('Extra files finded..',view);
-				const viewName = serverSideConfigs.extraFiles.find((file) => file.name === view);
+				const viewName = serverSideConfigs.extraFiles.find((file) => file.view === view);
 				if (viewName) {
 					console.log('Extra files found for this view..');
 					extraFiles = viewName.files;
@@ -66,7 +82,6 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 				console.log("i18n4e paths", i18n4e.langsFilesPath)
 				const actualDir = path.dirname(mainFilePath);
 				console.log("Actual dir: ", actualDir)
-			//	delete requestedLangArray[0];
 
 				console.log('\n Main file path: ', mainFilePath);
 				console.log('\n Actual dir: ', actualDir);
@@ -107,9 +122,10 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 				}
 
 
-
+				const translatedHtml = $.html();
+				htmlCache.set(cacheKey, translatedHtml);
 				console.log('Sending modified HTML');
-				res.send($.html());
+				res.send(translatedHtml);
 			});
 		};
 		next();

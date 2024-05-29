@@ -45,9 +45,6 @@ export const getLanguagesFilesPaths = (
 						);
 						const serverSideMainFileParsed = JSON.parse(serverSideMainFileJSON);
 
-						if (serverSideMainFileParsed.useAllExtraFiles) {
-							serverSideConfigs.useAllExtraFiles = true;
-						}
 
 						if (serverSideMainFileParsed.removeTagAfterTranslation) {
 							serverSideConfigs.removeTagAfterTranslation = true;
@@ -55,7 +52,7 @@ export const getLanguagesFilesPaths = (
 
 						if (serverSideMainFileParsed.extraFiles) {
 
-							const allExtraFiles = serverSideMainFileParsed.extraFiles.find((file: any) => file.name === "*");
+							const allExtraFiles = serverSideMainFileParsed.extraFiles.find((file: any) => file.view === "*");
 
 							if (allExtraFiles && allExtraFiles.files.length > 0){
 								console.log('Server Side Translation Configs: Using All Extra Files');

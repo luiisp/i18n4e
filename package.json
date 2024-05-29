@@ -17,7 +17,7 @@
 		"format:check": "prettier --check \"./**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
 	},
 	"publishConfig": {
-		"registry":"https://npm.pkg.github.com/"
+		"registry": "https://npm.pkg.github.com/"
 	},
 	"repository": {
 		"type": "git",
@@ -54,6 +54,7 @@
 		"shx": "^0.3.4"
 	},
 	"dependencies": {
-		"cheerio": "^1.0.0-rc.12"
+		"cheerio": "^1.0.0-rc.12",
+		"node-cache": "^5.1.2"
 	}
 }

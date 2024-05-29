@@ -15,7 +15,7 @@ export interface options {
 }
 
 export interface ExtraFile {
-	name: string;
+	view: string;
 	files: string[];
 }
 
