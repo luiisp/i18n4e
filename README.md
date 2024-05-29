@@ -58,7 +58,7 @@ To see the full documentation, please visit the [official documentation](https:/
       const {i18n4e} = require('i18n4e');
       ```
 
-3. Create a _locales folder in the root of your project and add the locales files + server-side configuration file
+3. Create a _locales folder in the root of your project and add the locales files
     ```
     project
     ├── node_modules
@@ -104,9 +104,9 @@ To see the full documentation, please visit the [official documentation](https:/
 6. Init i18n4e with your express app and active the server-side translation mode
     ```javascript
     i18n4e.init(app,{
-      serverSideTranslation: true,
+      serverSideTranslation: true, // enable server-side translation mode
       options:{
-        defaultLang:'en',
+        defaultLang:'en', // define the default language
       }
     })
     ```
