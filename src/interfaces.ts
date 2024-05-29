@@ -4,7 +4,6 @@ export interface langsFilesPath {
 	[key: string]: string[];
 }
 
-
 export interface options {
 	defaultLang?: string;
 	langsFolder?: string;
@@ -42,7 +41,6 @@ export interface InitOptions {
 	options?: options;
 	serverSideTranslation?: boolean;
 }
-
 
 export interface minFilesOptions {
 	langsFolder?: string;

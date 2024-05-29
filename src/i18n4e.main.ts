@@ -22,9 +22,9 @@ const getCallerFile = (position: number = 2): string | undefined => {
 	const stack = new Error().stack;
 	Error.prepareStackTrace = oldPrepareStackTrace;
 
-	if (stack !== null && typeof stack === 'object') return stack[position] ? (stack[position] as any).getFileName() : undefined;
-
-}
+	if (stack !== null && typeof stack === 'object')
+		return stack[position] ? (stack[position] as any).getFileName() : undefined;
+};
 
 const i18n4e: I18n4e = {
 	langsFilesPath: {},
@@ -35,31 +35,29 @@ const i18n4e: I18n4e = {
 		app: express.Application,
 		{ options = {}, serverSideTranslation = false }: InitOptions = {}
 	): Promise<any> => {
-    if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e);
+		if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e);
 
-	if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
+		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
-	if (options.path) i18n4e.path = options.path;
+		if (options.path) i18n4e.path = options.path;
 
-	const caller = getCallerFile(2);
-	const callerPathParts = caller?.split('\\');
-	const callerPathPartsNoLast = callerPathParts?.slice(0, -1);
-	const finalPath = callerPathPartsNoLast?.join('\\');
+		const caller = getCallerFile(2);
+		const callerPathParts = caller?.split('\\');
+		const callerPathPartsNoLast = callerPathParts?.slice(0, -1);
+		const finalPath = callerPathPartsNoLast?.join('\\');
 
-	if (!finalPath) throw new Error('i18n4e (Init Error): Unable to get caller path.');
+		if (!finalPath) throw new Error('i18n4e (Init Error): Unable to get caller path.');
 
-    options.langsFolder = options.langsFolder 
-        ? path.resolve(finalPath || './', options.langsFolder)
-        : finalPath + '/_locales';
+		options.langsFolder = options.langsFolder
+			? path.resolve(finalPath || './', options.langsFolder)
+			: finalPath + '/_locales';
 		i18n4e.locatesFolder = options.langsFolder;
-
-			
 
 		return getLanguagesFilesPaths(options, serverSideTranslation)
 			.then((filesPaths: any) => {
 				i18n4e.langsFilesPath = filesPaths;
 				if (!serverSideTranslation) wrapperAddTranslationsRoute(app, { i18n4e: i18n4e });
-					
+
 				return filesPaths;
 			})
 			.catch((err: Error) => {
@@ -71,5 +69,4 @@ const i18n4e: I18n4e = {
 	},
 };
 
-
-export default i18n4e;
+export { i18n4e };

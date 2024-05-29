@@ -31,47 +31,36 @@ export const getLanguagesFilesPaths = (
 			const returnFilesPathValues: { [key: string]: string[] } = {};
 
 			if (serverSideTranslation) {
-				console.log('Server Side Translation Configs running..');
-				const serverSideMainFilePath = path.join(
-					langsFolder,
-					'sst.config.json'
-				);
+				const serverSideMainFilePath = path.join(langsFolder, 'sst.config.json');
 				fs.access(serverSideMainFilePath, fs.constants.F_OK, (err) => {
 					if (!err) {
-						console.log('Server Side Translation Configs found in: ', serverSideMainFilePath);
 						const serverSideMainFileJSON = fs.readFileSync(
 							serverSideMainFilePath,
 							'utf8'
 						);
 						const serverSideMainFileParsed = JSON.parse(serverSideMainFileJSON);
 
-
 						if (serverSideMainFileParsed.removeTagAfterTranslation) {
 							serverSideConfigs.removeTagAfterTranslation = true;
 						}
 
 						if (serverSideMainFileParsed.extraFiles) {
+							const allExtraFiles = serverSideMainFileParsed.extraFiles.find(
+								(file: any) => file.view === '*'
+							);
 
-							const allExtraFiles = serverSideMainFileParsed.extraFiles.find((file: any) => file.view === "*");
-
-							if (allExtraFiles && allExtraFiles.files.length > 0){
-								console.log('Server Side Translation Configs: Using All Extra Files');
+							if (allExtraFiles && allExtraFiles.files.length > 0) {
 								serverSideConfigs.useAllExtraFiles = true;
 								serverSideConfigs.AllExtraFiles = allExtraFiles.files;
 							}
 
-							serverSideConfigs.extraFiles =
-								serverSideMainFileParsed.extraFiles;
+							serverSideConfigs.extraFiles = serverSideMainFileParsed.extraFiles;
 						}
-
-
 					} else {
-						console.log('Server Side Translation Configs not found in', serverSideMainFilePath, "err", err);
 						serverSideConfigs.optionsServerSide = false;
 					}
 				});
 			}
-
 
 			const promises = files.map((file) => {
 				return new Promise((resolve, reject) => {
@@ -83,8 +72,6 @@ export const getLanguagesFilesPaths = (
 						);
 					}
 					const filePath = path.join(langsFolder, file);
-
-					
 
 					fs.stat(filePath, (err, stats) => {
 						if (err) {
