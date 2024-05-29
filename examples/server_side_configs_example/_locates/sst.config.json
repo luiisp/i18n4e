@@ -2,19 +2,19 @@
 	"removeTagAfterTranslation": true,
 	"extraFiles": [
 		{
-			"name": "index",
+			"view": "index",
 			"files": ["menu", "home", "footer"]
 		},
 		{
-			"name": "page",
+			"view": "page",
 			"files": ["menu", "home", "footer"]
 		},
 		{
-			"name": "credits",
+			"view": "credits",
 			"files": ["menu", "home", "footer"]
 		},
 		{
-			"name": "*",
+			"view": "*",
 			"files":["alltranslation"]
 		}
 	]
