@@ -12,7 +12,7 @@
 		{
 			"name": "credits",
 			"files": ["menu", "home", "footer"]
-		}
+		},
 		{
 			"name": "*",
 			"files":["alltranslation"]
