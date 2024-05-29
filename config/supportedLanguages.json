@@ -89,6 +89,10 @@
 			"name": "English"
 		},
 		{
+			"code": "en-US",
+			"name": "English (United States)"
+		},
+		{
 			"code": "eo",
 			"name": "Esperanto"
 		},

@@ -36,16 +36,17 @@ const i18n4e: I18n4e = {
 		{ options = {}, serverSideTranslation = false }: InitOptions = {}
 	): Promise<any> => {
     if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e);
-		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
-		if (options.path) i18n4e.path = options.path;
+	if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
-		const caller = getCallerFile(2);
-		const callerPathParts = caller?.split('\\');
-		const callerPathPartsNoLast = callerPathParts?.slice(0, -1);
-		const finalPath = callerPathPartsNoLast?.join('\\');
+	if (options.path) i18n4e.path = options.path;
 
-		if (!finalPath) throw new Error('i18n4e (Init Error): Unable to get caller path.');
+	const caller = getCallerFile(2);
+	const callerPathParts = caller?.split('\\');
+	const callerPathPartsNoLast = callerPathParts?.slice(0, -1);
+	const finalPath = callerPathPartsNoLast?.join('\\');
+
+	if (!finalPath) throw new Error('i18n4e (Init Error): Unable to get caller path.');
 
     options.langsFolder = options.langsFolder 
         ? path.resolve(finalPath || './', options.langsFolder)

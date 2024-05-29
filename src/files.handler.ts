@@ -29,9 +29,56 @@ export const getLanguagesFilesPaths = (
 			}
 
 			const returnFilesPathValues: { [key: string]: string[] } = {};
+
+			if (serverSideTranslation) {
+				console.log('Server Side Translation Configs running..');
+				const serverSideMainFilePath = path.join(
+					langsFolder,
+					'sst.config.json'
+				);
+				fs.access(serverSideMainFilePath, fs.constants.F_OK, (err) => {
+					if (!err) {
+						console.log('Server Side Translation Configs found in: ', serverSideMainFilePath);
+						const serverSideMainFileJSON = fs.readFileSync(
+							serverSideMainFilePath,
+							'utf8'
+						);
+						const serverSideMainFileParsed = JSON.parse(serverSideMainFileJSON);
+
+						if (serverSideMainFileParsed.useAllExtraFiles) {
+							serverSideConfigs.useAllExtraFiles = true;
+						}
+
+						if (serverSideMainFileParsed.removeTagAfterTranslation) {
+							serverSideConfigs.removeTagAfterTranslation = true;
+						}
+
+						if (serverSideMainFileParsed.extraFiles) {
+
+							const allExtraFiles = serverSideMainFileParsed.extraFiles.find((file: any) => file.name === "*");
+
+							if (allExtraFiles && allExtraFiles.files.length > 0){
+								console.log('Server Side Translation Configs: Using All Extra Files');
+								serverSideConfigs.useAllExtraFiles = true;
+								serverSideConfigs.AllExtraFiles = allExtraFiles.files;
+							}
+
+							serverSideConfigs.extraFiles =
+								serverSideMainFileParsed.extraFiles;
+						}
+
+
+					} else {
+						console.log('Server Side Translation Configs not found in', serverSideMainFilePath, "err", err);
+						serverSideConfigs.optionsServerSide = false;
+					}
+				});
+			}
+
+
 			const promises = files.map((file) => {
 				return new Promise((resolve, reject) => {
-					if (!folderNameIsALanguage(file)) {
+					if (!folderNameIsALanguage(file) && file.endsWith('.json') == false) {
 						return reject(
 							new Error(
 								`The folder (${file}) is not a valid language folder. Consult the i18n4e supported languages list.`
@@ -40,36 +87,7 @@ export const getLanguagesFilesPaths = (
 					}
 					const filePath = path.join(langsFolder, file);
 
-					if (serverSideTranslation) {
-						const serverSideMainFilePath = path.join(
-							filePath,
-							'sst.config.json'
-						);
-						fs.access(serverSideMainFilePath, fs.constants.F_OK, (err) => {
-							if (!err) {
-								const serverSideMainFileJSON = fs.readFileSync(
-									serverSideMainFilePath,
-									'utf8'
-								);
-								const serverSideMainFileParsed = JSON.parse(serverSideMainFileJSON);
-
-								if (serverSideMainFileParsed.useAllExtraFiles) {
-									serverSideConfigs.useAllExtraFiles = true;
-								}
-
-								if (serverSideMainFileParsed.removeTagAfterTranslation) {
-									serverSideConfigs.removeTagAfterTranslation = true;
-								}
-
-								if (serverSideMainFileParsed.extraFiles) {
-									serverSideConfigs.extraFiles =
-										serverSideMainFileParsed.extraFiles;
-								}
-							} else {
-								serverSideConfigs.optionsServerSide = false;
-							}
-						});
-					}
+					
 
 					fs.stat(filePath, (err, stats) => {
 						if (err) {

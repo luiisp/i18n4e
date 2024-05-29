@@ -4,10 +4,6 @@ export interface langsFilesPath {
 	[key: string]: string[];
 }
 
-export interface InitOptions {
-	options?: options;
-	serverSideTranslation?: boolean;
-}
 
 export interface options {
 	defaultLang?: string;
@@ -26,6 +22,7 @@ export interface ExtraFile {
 export interface optionsServerSide {
 	optionsServerSide?: boolean;
 	useAllExtraFiles?: boolean;
+	AllExtraFiles?: string[];
 	removeTagAfterTranslation?: boolean;
 	extraFiles?: ExtraFile[];
 }
@@ -40,6 +37,12 @@ export interface I18n4e {
 		{ options, serverSideTranslation }?: InitOptions
 	) => Promise<any>;
 }
+
+export interface InitOptions {
+	options?: options;
+	serverSideTranslation?: boolean;
+}
+
 
 export interface minFilesOptions {
 	langsFolder?: string;
