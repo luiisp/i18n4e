@@ -1,6 +1,6 @@
 
 <p>
-  <a href="/" target="blank"><img src="https://github.com/luiisp/i18n4e/assets/115284250/5338d39e-7cfd-4bc5-b5f1-ae4c708d5b9d" width="240" alt="i18n4e logo" /></a>
+  <a href="/" target="blank"><img src="https://github.com/luiisp/i18n4e/assets/115284250/5338d39e-7cfd-4bc5-b5f1-ae4c708d5b9d" width="200" alt="i18n4e logo" /></a>
 </p>
 
 # i18n4e: i18n for Express Js 🌐👾 (Under development 🚧)
