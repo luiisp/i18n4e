@@ -43,7 +43,7 @@ or
 
 # 📚 Docs
 
-To see the full documentation, please visit the [official documentation](https://luiisp.github.io/i18n4e-docs).
+To see the full documentation, please visit the [official documentation](https://i18n4e.vercel.app/docs).
 
 # 📖 Simple Usage In 6 Steps
 > In this simple example we will use the server-side translation mode **(SST)**
