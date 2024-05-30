@@ -46,7 +46,7 @@ or
 To see the full documentation, please visit the [official documentation](https://i18n4e.vercel.app/docs).
 
 # 📖 Simple Usage In 6 Steps
-> In this simple example we will use the server-side translation mode **(SST)**
+> In this simple example we will use the server-side translation mode **(SST)**. [Learn More about SST](https://i18n4e.vercel.app/docs/sst)
 
 1. Install the package
     ```bash
