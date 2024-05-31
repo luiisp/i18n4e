@@ -126,3 +126,11 @@ Its done! Now your application is ready to be translated into multiple languages
 - Client-side translation mode based on JSON (CST)
 - Server-side translation (SST)
 - HTML/EJS support
+
+# 📝 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+# 🫚 Dependencies
+- [cheerio](https://www.npmjs.com/package/cheerio) (Dom manipulation)
+- [node-cache](https://www.npmjs.com/package/node-cache) (Cache system)
+
