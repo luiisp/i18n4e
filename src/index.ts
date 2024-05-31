@@ -7,7 +7,7 @@ import { I18n4e, InitOptions } from './interfaces';
 import { i18nServerSideMiddlewareWrapper } from './middleware';
 import { CallSite } from './types';
 
-function getCallerFile(position: number = 1): string | undefined {
+function getCallerFile(position: number = 2): string | undefined {
 	if (position >= Error.stackTraceLimit) {
 		throw new TypeError(
 			'getCallerFile(position) requires position be less than Error.stackTraceLimit but position was: `' +
