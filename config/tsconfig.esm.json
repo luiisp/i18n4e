@@ -8,5 +8,5 @@
 		"outDir": "../lib/esm",
 		"declarationDir": "../lib/esm/types"
 	},
-	"include": ["../src/i18n4e.main.ts", "../src/**/*"]
+	"include": ["../src/index.ts", "../src/**/*"]
 }
