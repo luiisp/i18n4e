@@ -22,29 +22,28 @@ export const getLanguagesFilesPaths = (
 	return new Promise((resolve, reject) => {
 		fs.readdir(langsFolder, (err, files) => {
 			if (err) {
-			const localesFolderName = path.basename(path.resolve(definitions.path)) || '_locales';
-			const tryScour = scourFolder(localesFolderName);
-			
-			if (!tryScour) {
-				return reject(
-					new Error(
-						`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}, Scour is false -> ${tryScour}`
-					)
-				);
+				const localesFolderName =
+					path.basename(path.resolve(definitions.path)) || '_locales';
+				const tryScour = scourFolder(localesFolderName);
+
+				if (!tryScour) {
+					return reject(
+						new Error(
+							`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}, Scour is false -> ${tryScour}`
+						)
+					);
+				}
+				definitions.path = tryScour;
+				langsFolder = path.join(definitions.path);
+				files = fs.readdirSync(langsFolder);
+				if (!files) {
+					return reject(
+						new Error(
+							`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}, Scour is false -> ${tryScour}`
+						)
+					);
+				}
 			}
-			definitions.path = tryScour;
-			langsFolder = path.join(definitions.path);
-			files = fs.readdirSync(langsFolder);
-			if (!files ) {
-				return reject(
-					new Error(
-						`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}, Scour is false -> ${tryScour}`
-					)
-				);
-			}
-			
-			
-		};
 
 			const returnFilesPathValues: { [key: string]: string[] } = {};
 

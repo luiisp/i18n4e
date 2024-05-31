@@ -68,7 +68,6 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 				if (serverSideConfigs.useAllExtraFiles && serverSideConfigs.AllExtraFiles) {
 					serverSideConfigs.AllExtraFiles.forEach((file) => {
 						const relativePathExtra = path.join(actualDir, file + '.json');
-
 						const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
 						for (const key in extraFile) {
 							$('[i18nID="' + key + '"]').text(extraFile[key].message);

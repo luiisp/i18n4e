@@ -49,17 +49,14 @@ const i18n4e: I18n4e = {
 		let caller = getCallerFile(2);
 		//if (!caller || typeof caller != 'string')
 		//	throw new Error('i18n4e (Init Error): Unable to get caller path.');
-		if (caller){
-
+		if (caller) {
 			if (caller.includes('file')) caller = caller.split('///')[1];
-		const finalPath = path.dirname(caller);
-		options.langsFolder = options.langsFolder
-			? path.resolve(finalPath || './', options.langsFolder)
-			: finalPath + '/_locales';
-		i18n4e.localesFolder = options.langsFolder;
-
-		};
-		
+			const finalPath = path.dirname(caller);
+			options.langsFolder = options.langsFolder
+				? path.resolve(finalPath || './', options.langsFolder)
+				: finalPath + '/_locales';
+			i18n4e.localesFolder = options.langsFolder;
+		}
 
 		return getLanguagesFilesPaths(options, serverSideTranslation)
 			.then((filesPaths: any) => {
