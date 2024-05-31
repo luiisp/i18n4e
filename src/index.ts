@@ -7,32 +7,29 @@ import { I18n4e, InitOptions } from './interfaces';
 import { i18nServerSideMiddlewareWrapper } from './middleware';
 import { CallSite } from './types';
 
-
 function getCallerFile(position: number = 1): string | undefined {
-    if (position >= Error.stackTraceLimit) {
-        throw new TypeError(
-            'getCallerFile(position) requires position be less than Error.stackTraceLimit but position was: `' +
-            position +
-            '` and Error.stackTraceLimit was: `' +
-            Error.stackTraceLimit +
-            '`'
-        );
-    }
+	if (position >= Error.stackTraceLimit) {
+		throw new TypeError(
+			'getCallerFile(position) requires position be less than Error.stackTraceLimit but position was: `' +
+				position +
+				'` and Error.stackTraceLimit was: `' +
+				Error.stackTraceLimit +
+				'`'
+		);
+	}
 
-    const oldPrepareStackTrace = Error.prepareStackTrace;
-    Error.prepareStackTrace = (err, stack) => stack;
-    const err = new Error();
-    const stack = err.stack as unknown as CallSite[];
-    Error.prepareStackTrace = oldPrepareStackTrace;
+	const oldPrepareStackTrace = Error.prepareStackTrace;
+	Error.prepareStackTrace = (err, stack) => stack;
+	const err = new Error();
+	const stack = err.stack as unknown as CallSite[];
+	Error.prepareStackTrace = oldPrepareStackTrace;
 
-    if (stack !== null && typeof stack === 'object') {
-        const callSite = stack[position];
-        return callSite ? callSite.getFileName() || undefined : undefined;
-    }
-    return undefined;
+	if (stack !== null && typeof stack === 'object') {
+		const callSite = stack[position];
+		return callSite ? callSite.getFileName() || undefined : undefined;
+	}
+	return undefined;
 }
-
-
 
 const i18n4e: I18n4e = {
 	langsFilesPath: {},
@@ -50,10 +47,11 @@ const i18n4e: I18n4e = {
 		if (options.path) i18n4e.path = options.path;
 
 		let caller = getCallerFile(2);
-		
-		console.log("caller", caller)
-		if (!caller || typeof(caller) != "string" ) throw new Error('i18n4e (Init Error): Unable to get caller path.');
-		if (caller.includes("file")) caller = caller.split("///")[1];
+
+		console.log('caller', caller);
+		if (!caller || typeof caller != 'string')
+			throw new Error('i18n4e (Init Error): Unable to get caller path.');
+		if (caller.includes('file')) caller = caller.split('///')[1];
 		const finalPath = path.dirname(caller);
 		options.langsFolder = options.langsFolder
 			? path.resolve(finalPath || './', options.langsFolder)
