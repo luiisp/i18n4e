@@ -34,7 +34,7 @@ function getCallerFile(position: number = 2): string | undefined {
 const i18n4e: I18n4e = {
 	langsFilesPath: {},
 	defaultLang: 'en',
-	locatesFolder: '',
+	localesFolder: '',
 	path: '/i18n4e/i/translations',
 	init: (
 		app: express.Application,
@@ -47,16 +47,19 @@ const i18n4e: I18n4e = {
 		if (options.path) i18n4e.path = options.path;
 
 		let caller = getCallerFile(2);
+		//if (!caller || typeof caller != 'string')
+		//	throw new Error('i18n4e (Init Error): Unable to get caller path.');
+		if (caller){
 
-		console.log('caller', caller);
-		if (!caller || typeof caller != 'string')
-			throw new Error('i18n4e (Init Error): Unable to get caller path.');
-		if (caller.includes('file')) caller = caller.split('///')[1];
+			if (caller.includes('file')) caller = caller.split('///')[1];
 		const finalPath = path.dirname(caller);
 		options.langsFolder = options.langsFolder
 			? path.resolve(finalPath || './', options.langsFolder)
 			: finalPath + '/_locales';
-		i18n4e.locatesFolder = options.langsFolder;
+		i18n4e.localesFolder = options.langsFolder;
+
+		};
+		
 
 		return getLanguagesFilesPaths(options, serverSideTranslation)
 			.then((filesPaths: any) => {

@@ -29,7 +29,7 @@ export interface optionsServerSide {
 export interface I18n4e {
 	langsFilesPath: langsFilesPath;
 	defaultLang: string;
-	locatesFolder: string;
+	localesFolder: string;
 	path: string;
 	init: (
 		app: express.Application,

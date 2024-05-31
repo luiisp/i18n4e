@@ -3,6 +3,7 @@ import * as path from 'path';
 import { minFilesOptions } from './interfaces';
 import { folderNameIsALanguage } from './utils/utils.main';
 import { serverSideConfigs } from './server-side.config';
+import { scourFolder } from './utils/utils.main';
 
 export const getLanguagesFilesPaths = (
 	options: minFilesOptions = {},
@@ -17,16 +18,33 @@ export const getLanguagesFilesPaths = (
 
 	definitions.path = definitions.path.replace(regex, path.sep);
 
-	const langsFolder = path.join(definitions.path);
+	let langsFolder = path.join(definitions.path);
 	return new Promise((resolve, reject) => {
 		fs.readdir(langsFolder, (err, files) => {
 			if (err) {
+			const localesFolderName = path.basename(path.resolve(definitions.path)) || '_locales';
+			const tryScour = scourFolder(localesFolderName);
+			
+			if (!tryScour) {
 				return reject(
 					new Error(
-						`i18n4e languages folder defined as (${definitions.path}) was not found.`
+						`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}, Scour is false -> ${tryScour}`
 					)
 				);
 			}
+			definitions.path = tryScour;
+			langsFolder = path.join(definitions.path);
+			files = fs.readdirSync(langsFolder);
+			if (!files ) {
+				return reject(
+					new Error(
+						`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}, Scour is false -> ${tryScour}`
+					)
+				);
+			}
+			
+			
+		};
 
 			const returnFilesPathValues: { [key: string]: string[] } = {};
 
