@@ -11,11 +11,6 @@
 
 i18n4e is a package that offers a modern, quick and easy way to add internationalization support to your Express Js application.
 
-> Please do not download this package yet, the source files are being developed, the first stable release will be released soon!
-
-## Loading.. 🚧
-This package is under development, please wait for the first release.
-
 ## 🚀 Installation
 ```bash
 npm install i18n4e
@@ -127,10 +122,25 @@ Its done! Now your application is ready to be translated into multiple languages
 - Server-side translation (SST)
 - HTML/EJS support
 
+# 💪 Contributing
+
+**We welcome contributions to the i18n4e project!** If you would like to contribute, **please follow these steps:**
+
+1. Fork the repository on GitHub.
+2. Clone your forked repository to your local machine.
+3. Create a new branch for your changes.
+4. Make your desired changes to the codebase.
+5. Test your changes to ensure they work as expected.
+6. Commit your changes and push them to your forked repository.
+7. Submit a pull request to the main i18n4e repository.
+
+Please make sure to follow our [contribution guidelines](CONTRIBUTING.md) and adhere to our [code of conduct](CODE_OF_CONDUCT.md) when contributing.
+
+We appreciate your contributions and look forward to working with you!
+
+
+
 # 📝 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-# 🫚 Dependencies
-- [cheerio](https://www.npmjs.com/package/cheerio) (Dom manipulation)
-- [node-cache](https://www.npmjs.com/package/node-cache) (Cache system)
-
+> *Created with ❤️ by [luiisp](https://github.com/luiisp)*
