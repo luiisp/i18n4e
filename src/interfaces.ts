@@ -10,6 +10,7 @@ export interface options {
 	mainFile?: string;
 	extraFiles?: string[];
 	path?: string;
+	dev?: boolean;
 	renderWithDocument?: boolean;
 }
 

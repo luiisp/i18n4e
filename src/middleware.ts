@@ -6,8 +6,9 @@ import cheerio from 'cheerio';
 import { serverSideConfigs } from './server-side.config';
 import NodeCache from 'node-cache';
 
-export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e: I18n4e) => {
+export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e: I18n4e, dev: boolean = true) => {
 	const htmlCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
+
 
 	app.use((req: Request, res: Response, next: NextFunction) => {
 		const originalRender = res.render.bind(res);
@@ -30,7 +31,7 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 
 			const cacheKey = `${view}-${userLang}`;
 			const cachedHtml = htmlCache.get(cacheKey);
-			if (cachedHtml) {
+			if (cachedHtml && !dev) {
 				return res.send(cachedHtml as string);
 			}
 
@@ -87,7 +88,7 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 				}
 
 				const translatedHtml = $.html();
-				htmlCache.set(cacheKey, translatedHtml);
+				if (!dev) htmlCache.set(cacheKey, translatedHtml);
 				res.send(translatedHtml);
 			});
 		};

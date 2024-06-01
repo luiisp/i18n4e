@@ -40,7 +40,7 @@ const i18n4e: I18n4e = {
 		app: express.Application,
 		{ options = {}, serverSideTranslation = false }: InitOptions = {}
 	): Promise<any> => {
-		if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e);
+		if (serverSideTranslation) i18nServerSideMiddlewareWrapper(app, i18n4e,options.dev);
 
 		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 
