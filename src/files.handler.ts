@@ -10,6 +10,9 @@ export const getLanguagesFilesPaths = (
 	serverSideTranslation: boolean = false
 ): Promise<{ [key: string]: string[] }> => {
 	const regex = /\/|\\/g;
+	if (options.mainFile && !options.mainFile.endsWith('.json')) {
+		options.mainFile = `${options.mainFile}.json`;
+	};
 	const definitions = {
 		path: options.langsFolder || '',
 		mainFile: options.mainFile || 'translation.json',
