@@ -122,6 +122,11 @@ Its done! Now your application is ready to be translated into multiple languages
 - Server-side translation (SST)
 - HTML/EJS support
 
+# 🕶️ Examples
+We have several ready-made project examples using i18n4e that you can view and use as you wish.
+
+#### [Click to see them 😎](https://github.com/luiisp/i18n4e/tree/main/examples)
+
 # 💪 Contributing
 
 **We welcome contributions to the i18n4e project!** If you would like to contribute, **please follow these steps:**
