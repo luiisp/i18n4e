@@ -1,0 +1,6 @@
+node_modules/
+server/
+examples/
+.github/
+*.html
+.npmrc
