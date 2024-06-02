@@ -4,21 +4,20 @@ import { minFilesOptions } from './interfaces';
 import { folderNameIsALanguage } from './utils/utils.main';
 import { serverSideConfigs } from './server-side.config';
 import { scourFolder } from './utils/utils.main';
+import { alwaysJson } from './utils/tools';
 
 export const getLanguagesFilesPaths = (
 	options: minFilesOptions = {},
 	serverSideTranslation: boolean = false
 ): Promise<{ [key: string]: string[] }> => {
 	const regex = /\/|\\/g;
-	if (options.mainFile && !options.mainFile.endsWith('.json')) {
-		options.mainFile = `${options.mainFile}.json`;
-	};
 	const definitions = {
 		path: options.langsFolder || '',
 		mainFile: options.mainFile || 'translation.json',
 		extraFiles: options.extraFiles || [],
 	};
 
+	definitions.mainFile = alwaysJson(definitions.mainFile);
 	definitions.path = definitions.path.replace(regex, path.sep);
 
 	let langsFolder = path.join(definitions.path);
@@ -32,7 +31,7 @@ export const getLanguagesFilesPaths = (
 				if (!tryScour) {
 					return reject(
 						new Error(
-							`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}, Scour is false -> ${tryScour}`
+							`i18n4e languages folder defined as (${definitions.path}) was not found or is not a valid path. Err: ${err.message}`
 						)
 					);
 				}

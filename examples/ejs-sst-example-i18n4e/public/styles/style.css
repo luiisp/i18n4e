@@ -1,0 +1,58 @@
+body{
+    background-color: rgb(8, 8, 9);
+    color: aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 88vh;
+
+
+}
+
+h2{
+    color: rgb(64, 43, 226);
+}
+
+
+
+.globals{
+    color: rgb(226, 134, 43);
+    
+}
+
+
+.logo{
+    animation: rotate 5s linear infinite, scale 5s ease-in-out infinite, fadeIn 5s ease-in-out infinite;
+}
+
+
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes scale {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes fadeIn {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}

@@ -1,0 +1,3 @@
+{
+    "variable-by-main": "(Essa variável vem do arquivo principal) O arquivo principal (inicialmente chamado de translation.json) é obrigatório e suas variáveis ​​declaradas podem ser vistas por todos os arquivos globalmente :)"
+}

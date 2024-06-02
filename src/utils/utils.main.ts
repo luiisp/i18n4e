@@ -50,3 +50,4 @@ const findFolderRecursive = (dir: string, folderName: string): string | undefine
 
 	return undefined;
 };
+
