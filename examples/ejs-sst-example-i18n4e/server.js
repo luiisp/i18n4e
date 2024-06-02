@@ -1,5 +1,5 @@
 const express = require('express');
-const { i18n4e } = require('ejs'); // import the i18n4e 
+const { i18n4e } = require('i18n4e'); // import the i18n4e 
 
 const app = express();
 
