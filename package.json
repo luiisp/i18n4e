@@ -1,6 +1,6 @@
 {
 	"name": "i18n4e",
-	"version": "0.3.5",
+	"version": "0.4.0",
 	"description": "i18n4e is a quick and easy way to add internationalization support to your Express Js application.",
 	"main": "lib/cjs/src/index.js",
 	"module": "lib/esm/src/index.mjs",
