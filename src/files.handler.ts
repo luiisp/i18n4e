@@ -168,12 +168,20 @@ export const getLanguagesFilesPaths = (
 };
 
 export const returnVarTranslationsFromFiles = (langFilesPaths: string[]) => {
-	let varTranslationsFromFiles: { [key: string]: any } = {};
+	let varTranslationsFromFiles: { [key: string]: any } = {}; // for client-side translations
 	langFilesPaths.forEach((file) => {
 		const fileJSON = fs.readFileSync(file, 'utf8');
 		const fileParsed = JSON.parse(fileJSON);
 		Object.entries(fileParsed).forEach(([key, value]: [string, any]) => {
-			varTranslationsFromFiles[key] = value.message;
+			let instance: string = `i18n Invalid Value (${key})`;
+			if (typeof value === 'string') {
+				instance = value;
+			}else if (typeof value === 'object') {
+				instance = value.message;
+			}
+
+			varTranslationsFromFiles[key] = instance;
+			
 		});
 	});
 

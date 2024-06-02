@@ -62,7 +62,14 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 
 				const mainFile = JSON.parse(fs.readFileSync(mainFilePath, 'utf8'));
 				for (const key in mainFile) {
-					$('[i18nID="' + key + '"]').text(mainFile[key].message);
+					let instance:string = `i18n invalid value (${key})`;
+					if (typeof mainFile[key] === 'string') {
+						instance = mainFile[key];
+					}else if (typeof mainFile[key] === 'object') {
+						instance = mainFile[key].message;
+					}
+
+					$('[i18nID="' + key + '"]').text(instance);
 				}
 
 				//all extra files
@@ -71,7 +78,14 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 						const relativePathExtra = path.join(actualDir, file + '.json');
 						const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
 						for (const key in extraFile) {
-							$('[i18nID="' + key + '"]').text(extraFile[key].message);
+							let instance:string = `i18n invalid value (${key})`;
+							if (typeof extraFile[key] === 'string') {
+								instance = extraFile[key];
+							}else if (typeof extraFile[key] === 'object') {
+								instance = extraFile[key].message;
+							}
+
+							$('[i18nID="' + key + '"]').text(instance);
 						}
 					});
 				}
@@ -82,7 +96,14 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 						const relativePathExtra = path.join(actualDir, file + '.json');
 						const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
 						for (const key in extraFile) {
-							$('[i18nID="' + key + '"]').text(extraFile[key].message);
+							let instance:string = `i18n invalid value (${key})`;
+							if (typeof extraFile[key] === 'string') {
+								instance = extraFile[key];
+							}else if (typeof extraFile[key] === 'object') {
+								instance = extraFile[key].message;
+							}
+
+							$('[i18nID="' + key + '"]').text(instance);
 						}
 					});
 				}
