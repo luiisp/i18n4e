@@ -8,7 +8,7 @@ import { alwaysJson } from './utils/tools';
 
 export const getLanguagesFilesPaths = (
 	options: minFilesOptions = {},
-	serverSideTranslation: boolean = false
+	serverSideTranslation: boolean = true
 ): Promise<{ [key: string]: string[] }> => {
 	const regex = /\/|\\/g;
 	const definitions = {
