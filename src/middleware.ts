@@ -6,12 +6,18 @@ import cheerio from 'cheerio';
 import { serverSideConfigs } from './server-side.config';
 import NodeCache from 'node-cache';
 
-export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e: I18n4e, dev: boolean = true) => {
+export const i18nServerSideMiddlewareWrapper = (
+	app: express.Application,
+	i18n4e: I18n4e,
+	dev: boolean = true
+) => {
 	const htmlCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 
-
 	app.use((req: Request, res: Response, next: NextFunction) => {
-		const originalRender = res.render.bind(res);
+		const splitedUrl = req.url.split('/');
+		const lastPath = splitedUrl[splitedUrl.length - 1].replace('-', '_');
+		let firstPath = req.url.split('/' + lastPath)[0];
+
 		let userLang: string;
 
 		if (req.headers['accept-language']) {
@@ -20,6 +26,14 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 		} else {
 			userLang = i18n4e.defaultLang;
 		}
+
+		if (firstPath.length === 0) firstPath = '/';
+		if (i18n4e.langsFilesPath[lastPath] && i18n4e.langNameInPath) {
+			userLang = lastPath;
+			req.url = firstPath;
+		}
+
+		const originalRender = res.render.bind(res);
 
 		res.render = (
 			view: string,
@@ -62,10 +76,10 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 
 				const mainFile = JSON.parse(fs.readFileSync(mainFilePath, 'utf8'));
 				for (const key in mainFile) {
-					let instance:string = `i18n invalid value (${key})`;
+					let instance: string = `i18n invalid value (${key})`;
 					if (typeof mainFile[key] === 'string') {
 						instance = mainFile[key];
-					}else if (typeof mainFile[key] === 'object') {
+					} else if (typeof mainFile[key] === 'object') {
 						instance = mainFile[key].message;
 					}
 
@@ -78,10 +92,10 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 						const relativePathExtra = path.join(actualDir, file + '.json');
 						const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
 						for (const key in extraFile) {
-							let instance:string = `i18n invalid value (${key})`;
+							let instance: string = `i18n invalid value (${key})`;
 							if (typeof extraFile[key] === 'string') {
 								instance = extraFile[key];
-							}else if (typeof extraFile[key] === 'object') {
+							} else if (typeof extraFile[key] === 'object') {
 								instance = extraFile[key].message;
 							}
 
@@ -96,10 +110,10 @@ export const i18nServerSideMiddlewareWrapper = (app: express.Application, i18n4e
 						const relativePathExtra = path.join(actualDir, file + '.json');
 						const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
 						for (const key in extraFile) {
-							let instance:string = `i18n invalid value (${key})`;
+							let instance: string = `i18n invalid value (${key})`;
 							if (typeof extraFile[key] === 'string') {
 								instance = extraFile[key];
-							}else if (typeof extraFile[key] === 'object') {
+							} else if (typeof extraFile[key] === 'object') {
 								instance = extraFile[key].message;
 							}
 

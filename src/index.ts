@@ -4,7 +4,6 @@ import * as path from 'path';
 import { getLanguagesFilesPaths } from './files.handler';
 import { I18n4e, InitOptions } from './interfaces';
 import { i18nServerSideMiddlewareWrapper } from './middleware';
-import { startLangsNameInPath } from './route';
 import { CallSite } from './types';
 
 function getCallerFile(position: number = 2): string | undefined {
@@ -35,13 +34,14 @@ const i18n4e: I18n4e = {
 	langsFilesPath: {},
 	defaultLang: 'en',
 	localesFolder: '',
-	init: (
-		app: express.Application,
-		options: InitOptions = {}
-	): Promise<any> => {
-		i18nServerSideMiddlewareWrapper(app, i18n4e,options.dev);
+	langNameInPath: false,
+	enableClient: false,
+	init: (app: express.Application, options: InitOptions = {}): Promise<any> => {
+		i18nServerSideMiddlewareWrapper(app, i18n4e, options.dev);
 
 		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
+		if (options.langNameInPath) i18n4e.langNameInPath = options.langNameInPath;
+//		if (options.enableClient) i18n4e.enableClient = options.enableClient;
 
 		let caller = getCallerFile(2);
 		//if (!caller || typeof caller != 'string')
@@ -58,15 +58,13 @@ const i18n4e: I18n4e = {
 		return getLanguagesFilesPaths(options)
 			.then((filesPaths: any) => {
 				i18n4e.langsFilesPath = filesPaths;
-
-				// w
-				if (options.langNameInPath) startLangsNameInPath(app, options);
+				console.log(filesPaths, ' ->> OK');
 
 				return filesPaths;
 			})
 			.catch((err: Error) => {
 				console.error(
-					`\x1b[3m\x1b[34m[i18n4e\x1b[0m \x1b[31m\x1b[1mError\x1b[0m \x1b[3m\x1b[34m(On Init)]\x1b[0m  \x1b[33m-->\x1b[0m \x1b[31m\x1b[1m${err.message}\x1b[0m`
+					`\x1b[3m\x1b[34m[i18n4e\x1b[0m \x1b[31m\x1b[1mError\x1b[0m \x1b[3m\x1b[34m(On Init)]\x1b[0m  --> \x1b[31m\x1b[1m${err.message}\x1b[0m`
 				);
 				throw new Error('i18n4e (Init Error)');
 			});

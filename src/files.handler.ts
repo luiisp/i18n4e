@@ -175,12 +175,11 @@ export const returnVarTranslationsFromFiles = (langFilesPaths: string[]) => {
 			let instance: string = `i18n Invalid Value (${key})`;
 			if (typeof value === 'string') {
 				instance = value;
-			}else if (typeof value === 'object') {
+			} else if (typeof value === 'object') {
 				instance = value.message;
 			}
 
 			varTranslationsFromFiles[key] = instance;
-			
 		});
 	});
 

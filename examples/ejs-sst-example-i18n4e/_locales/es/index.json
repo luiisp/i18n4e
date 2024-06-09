@@ -1,7 +1,7 @@
 {
-    "title":"Página de Hola Mundo",
-    "hello-world": "Hola Mundo",
-    "info":"Este es mi sitio web con internacionalización usando i18n4e.",
-    "desc":"se puede leer en varios idiomas como portugués, ruso, español y otros dependiendo de lo que hable el usuario",
-    "next-page":"haga clic para ir a la siguiente página"
+	"title": "Página de Hola Mundo",
+	"hello-world": "Hola Mundo",
+	"info": "Este es mi sitio web con internacionalización usando i18n4e.",
+	"desc": "se puede leer en varios idiomas como portugués, ruso, español y otros dependiendo de lo que hable el usuario",
+	"next-page": "haga clic para ir a la siguiente página"
 }

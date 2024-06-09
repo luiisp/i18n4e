@@ -1,17 +1,16 @@
 {
-	
 	"extraFiles": [
 		{
 			"view": "*",
-			"files":["all"]
+			"files": ["all"]
 		},
 		{
-			"view":"index",
-			"files":["index"]
+			"view": "index",
+			"files": ["index"]
 		},
 		{
-			"view":"next",
-			"files":["next"]
+			"view": "next",
+			"files": ["next"]
 		}
 	]
 }
