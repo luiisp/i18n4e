@@ -28,7 +28,7 @@ export const i18nServerSideMiddlewareWrapper = (
 		}
 
 		if (firstPath.length === 0) firstPath = '/';
-		if (i18n4e.langsFilesPath[lastPath] && i18n4e.langNameInPath) {
+		if (i18n4e.langNameInPath && i18n4e.langsFilesPath[lastPath]) {
 			userLang = lastPath;
 			req.url = firstPath;
 		}

@@ -35,6 +35,8 @@ export interface InitOptions {
 	path?: string;
 	dev?: boolean;
 	enableClient?: boolean;
+	enableLocalStorage?: boolean;
+	useI18n4eSession?: boolean;
 }
 
 export interface minFilesOptions {

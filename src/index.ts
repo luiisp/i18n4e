@@ -3,8 +3,9 @@ import express from 'express';
 import * as path from 'path';
 import { getLanguagesFilesPaths } from './files.handler';
 import { I18n4e, InitOptions } from './interfaces';
-import { i18nServerSideMiddlewareWrapper } from './middleware';
+import { i18nServerSideMiddlewareWrapper } from './middlewares';
 import { CallSite } from './types';
+import { clientRoutes } from "./routes"
 
 function getCallerFile(position: number = 2): string | undefined {
 	if (position >= Error.stackTraceLimit) {
@@ -38,10 +39,11 @@ const i18n4e: I18n4e = {
 	enableClient: false,
 	init: (app: express.Application, options: InitOptions = {}): Promise<any> => {
 		i18nServerSideMiddlewareWrapper(app, i18n4e, options.dev);
-
+		
+		if (options.enableClient) i18n4e.enableClient = options.enableClient;
 		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 		if (options.langNameInPath) i18n4e.langNameInPath = options.langNameInPath;
-//		if (options.enableClient) i18n4e.enableClient = options.enableClient;
+		if (options.enableClient) i18n4e.enableClient = options.enableClient;
 
 		let caller = getCallerFile(2);
 		//if (!caller || typeof caller != 'string')
@@ -53,12 +55,13 @@ const i18n4e: I18n4e = {
 				? path.resolve(finalPath || './', options.langsFolder)
 				: finalPath + '/_locales';
 			i18n4e.localesFolder = options.langsFolder;
-		}
-
+		};
 		return getLanguagesFilesPaths(options)
 			.then((filesPaths: any) => {
+
+				
 				i18n4e.langsFilesPath = filesPaths;
-				console.log(filesPaths, ' ->> OK');
+				if (options.enableClient) clientRoutes(app, i18n4e);
 
 				return filesPaths;
 			})

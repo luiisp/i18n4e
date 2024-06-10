@@ -5,6 +5,7 @@ import { folderNameIsALanguage } from './utils/utils.main';
 import { serverSideConfigs } from './server-side.config';
 import { scourFolder } from './utils/utils.main';
 import { alwaysJson } from './utils/tools';
+import { configNameFile } from "./configs"
 
 export const getLanguagesFilesPaths = (
 	options: minFilesOptions = {},
@@ -50,7 +51,7 @@ export const getLanguagesFilesPaths = (
 			const returnFilesPathValues: { [key: string]: string[] } = {};
 
 			if (serverSideTranslation) {
-				const serverSideMainFilePath = path.join(langsFolder, 'sst.config.json');
+				const serverSideMainFilePath = path.join(langsFolder, configNameFile); // .json
 				fs.access(serverSideMainFilePath, fs.constants.F_OK, (err) => {
 					if (!err) {
 						const serverSideMainFileJSON = fs.readFileSync(
