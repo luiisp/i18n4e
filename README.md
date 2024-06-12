@@ -107,7 +107,7 @@ Its done! Now your application is ready to be translated into multiple languages
 
 
 # 💭 Philosophy
-**i18n4e**, created with love by [Luiisp](https://github.com/luiisp), is a package with the philosophy of demystifying the difficulty of implementing i18n in web applications. At a high level, you can make various complex configurations using only boolean options.
+**i18n4e**, created with ❤️ by [Luiisp](https://github.com/luiisp), is a package with the philosophy of demystifying the difficulty of implementing i18n in web applications. At a high level, you can make various complex configurations using only boolean options.
 
 # 📦 Benefits
 
