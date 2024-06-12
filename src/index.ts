@@ -5,8 +5,8 @@ import { getLanguagesFilesPaths } from './files.handler';
 import { I18n4e, InitOptions } from './interfaces';
 import { i18nServerSideMiddlewareWrapper } from './middlewares';
 import { CallSite } from './types';
-import { clientRoutes } from "./routes"
-import { createDefaultSession } from "./session"
+import { clientRoutes } from './routes';
+import { createDefaultSession } from './session';
 
 function getCallerFile(position: number = 2): string | undefined {
 	if (position >= Error.stackTraceLimit) {
@@ -40,7 +40,7 @@ const i18n4e: I18n4e = {
 	enableClient: false,
 	useLangSession: false,
 	init: (app: express.Application, options: InitOptions = {}): Promise<any> => {
-		if (options.i18n4eDefaultSession) createDefaultSession(app,options.dev);
+		if (options.i18n4eDefaultSession) createDefaultSession(app, options.dev);
 		i18nServerSideMiddlewareWrapper(app, i18n4e, options.dev);
 
 		if (options.enableClient) i18n4e.enableClient = options.enableClient;
@@ -59,11 +59,9 @@ const i18n4e: I18n4e = {
 				? path.resolve(finalPath || './', options.langsFolder)
 				: finalPath + '/_locales';
 			i18n4e.localesFolder = options.langsFolder;
-		};
+		}
 		return getLanguagesFilesPaths(options)
 			.then((filesPaths: any) => {
-
-				
 				i18n4e.langsFilesPath = filesPaths;
 				if (options.enableClient) clientRoutes(app, i18n4e);
 

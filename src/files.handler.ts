@@ -5,7 +5,7 @@ import { folderNameIsALanguage } from './utils/utils.main';
 import { serverSideConfigs } from './server-side.config';
 import { scourFolder } from './utils/utils.main';
 import { alwaysJson } from './utils/tools';
-import { configNameFile } from "./configs"
+import { configNameFile } from './configs';
 
 export const getLanguagesFilesPaths = (
 	options: minFilesOptions = {},
