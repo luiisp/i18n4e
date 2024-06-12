@@ -21,8 +21,7 @@ or
 yarn add i18n4e
 ```
 
-### For client-side:
-> Only if using client side translation mode **(CST)**
+### In the client:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/i18n4e/client-dist/i18n4e.min.js"></script>
@@ -40,7 +39,6 @@ or
 To see the full documentation, please visit the [official documentation](https://i18n4e.vercel.app/docs).
 
 # 📖 Simple Usage In 6 Steps
-> In this simple example we will use the server-side translation mode **(SST)**. [Learn More about SST](https://i18n4e.vercel.app/docs/sst)
 
 1. Install the package
     ```bash
@@ -95,22 +93,21 @@ To see the full documentation, please visit the [official documentation](https:/
     ```
 
 
-6. Init i18n4e with your express app and active the server-side translation mode
+6. Start i18n4e on your file by passing your app express
     ```javascript
     i18n4e.init(app,{
-      serverSideTranslation: true, // enable server-side translation mode
-      options:{
-        defaultLang:'en', // define the default language
-      }
+        defaultLang:'en', // define the main language 
     })
     ```
 
 Its done! Now your application is ready to be translated into multiple languages.
 
+**For more examples and configurations, please visit the [official documentation](https://i18n4e.vercel.app/docs).**
 
 
 
-
+# 💭 Philosophy
+**i18n4e**, created with love by [Luiisp](https://github.com/luiisp), is a package with the philosophy of demystifying the difficulty of implementing i18n in web applications. At a high level, you can make various complex configurations using only boolean options.
 
 # 📦 Benefits
 
@@ -118,8 +115,7 @@ Its done! Now your application is ready to be translated into multiple languages
 - Fast and Scalable Execution
 - ES6/ESM and Common Js support
 - Easy to use
-- Client-side translation mode based on JSON (CST)
-- Server-side translation (SST)
+- Change language by session support
 - HTML/EJS support
 
 # 🕶️ Examples
@@ -147,5 +143,7 @@ We appreciate your contributions and look forward to working with you!
 
 # 📝 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+> inspired by chrome.i18n
 
 > *Created with ❤️ by [luiisp](https://github.com/luiisp)*
