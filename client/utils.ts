@@ -23,6 +23,7 @@ export const syncWithServer = async (syncType: 'setLang' | 'unsetLang', data: an
 		}
 
 		const responseData = await response.json();
+		document.location.reload();
 		return true;
 	} catch (error) {
 		console.error('i18n4e -> An error occurred while syncing with the server:', error);
