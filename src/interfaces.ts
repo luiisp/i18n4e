@@ -23,6 +23,7 @@ export interface I18n4e {
 	localesFolder: string;
 	langNameInPath: boolean;
 	enableClient: boolean;
+	useLangSession: boolean;
 	init: (app: express.Application, {}: InitOptions) => Promise<any>;
 }
 
@@ -35,8 +36,8 @@ export interface InitOptions {
 	path?: string;
 	dev?: boolean;
 	enableClient?: boolean;
-	enableLocalStorage?: boolean;
-	useI18n4eSession?: boolean;
+	useLangSession?: boolean;
+	i18n4eDefaultSession?: boolean;
 }
 
 export interface minFilesOptions {

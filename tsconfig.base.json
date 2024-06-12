@@ -12,5 +12,5 @@
 		"resolveJsonModule": true,
 		"types": ["jest"]
 	},
-	"files": ["./src/index.ts"]
+	"files": ["./src/index.ts", "types.d.ts"]
 }

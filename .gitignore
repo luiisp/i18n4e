@@ -1,6 +1,4 @@
 node_modules/
 server/
 lib/
-client/
-*.html
 .npmrc

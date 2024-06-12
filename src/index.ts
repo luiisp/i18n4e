@@ -6,6 +6,7 @@ import { I18n4e, InitOptions } from './interfaces';
 import { i18nServerSideMiddlewareWrapper } from './middlewares';
 import { CallSite } from './types';
 import { clientRoutes } from "./routes"
+import { createDefaultSession } from "./session"
 
 function getCallerFile(position: number = 2): string | undefined {
 	if (position >= Error.stackTraceLimit) {
@@ -37,13 +38,16 @@ const i18n4e: I18n4e = {
 	localesFolder: '',
 	langNameInPath: false,
 	enableClient: false,
+	useLangSession: false,
 	init: (app: express.Application, options: InitOptions = {}): Promise<any> => {
+		if (options.i18n4eDefaultSession) createDefaultSession(app,options.dev);
 		i18nServerSideMiddlewareWrapper(app, i18n4e, options.dev);
-		
+
 		if (options.enableClient) i18n4e.enableClient = options.enableClient;
 		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
 		if (options.langNameInPath) i18n4e.langNameInPath = options.langNameInPath;
 		if (options.enableClient) i18n4e.enableClient = options.enableClient;
+		if (options.useLangSession) i18n4e.useLangSession = options.useLangSession;
 
 		let caller = getCallerFile(2);
 		//if (!caller || typeof caller != 'string')

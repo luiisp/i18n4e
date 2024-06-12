@@ -27,6 +27,19 @@ export const i18nServerSideMiddlewareWrapper = (
 			userLang = i18n4e.defaultLang;
 		}
 
+
+		if (i18n4e.enableClient){
+			if (i18n4e.useLangSession){
+				if (!req.session){
+					console.error(`You are using useLangSession=true but you do not have a session activated in your express application. Use i18n4eDefaultSession=true or create a session for your express application.`)
+					throw new Error('i18n4e session not found -> Use i18n4eDefaultSession=true or create a session for your express application.');
+				}else{
+					userLang = req.session.lang || userLang;
+				}
+			}
+
+		}
+
 		if (firstPath.length === 0) firstPath = '/';
 		if (i18n4e.langNameInPath && i18n4e.langsFilesPath[lastPath]) {
 			userLang = lastPath;

@@ -13,7 +13,7 @@
 		"build": "npm run clean && npm run build:esm && npm run build:cjs",
 		"build:esm": "tsc -p ./config/tsconfig.esm.json && shx mv lib/esm/src/index.js lib/esm/src/index.mjs",
 		"build:cjs": "tsc -p ./config/tsconfig.cjs.json",
-		"build:client": "cd ./client && tsc",
+		"build:client": "cd ./client && npx webpack --config webpack.config.js",
 		"prepack": "npm run build",
 		"format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
 		"format:check": "prettier --check \"./**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
@@ -53,7 +53,9 @@
 		"rimraf": "^5.0.7",
 		"shx": "^0.3.4",
 		"ts-jest": "^29.1.4",
-		"ts-node": "^10.9.2"
+		"ts-loader": "^9.5.1",
+		"ts-node": "^10.9.2",
+		"webpack-cli": "^5.1.4"
 	},
 	"dependencies": {
 		"@types/express-session": "^1.18.0",
