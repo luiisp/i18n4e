@@ -1,19 +1,22 @@
 import express, { Request, Response, NextFunction } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
-import { I18n4e } from './interfaces';
+import { I18n4e, InitOptions } from './interfaces';
 import cheerio from 'cheerio';
 import { serverSideConfigs } from './server-side.config';
 import NodeCache from 'node-cache';
+import {isRouteBlacklisted} from "./utils/utils.main"
 
 export const i18nServerSideMiddlewareWrapper = (
 	app: express.Application,
 	i18n4e: I18n4e,
-	dev: boolean = true
+	dev: boolean = true,
+	allOptions: InitOptions = {}
 ) => {
 	const htmlCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
 
 	app.use((req: Request, res: Response, next: NextFunction) => {
+		if (isRouteBlacklisted(req)) return next();
 		const splitedUrl = req.url.split('/');
 		const lastPath = splitedUrl[splitedUrl.length - 1].replace('-', '_');
 		let firstPath = req.url.split('/' + lastPath)[0];
@@ -37,15 +40,20 @@ export const i18nServerSideMiddlewareWrapper = (
 						'i18n4e session not found -> Use i18n4eDefaultSession=true or create a session for your express application.'
 					);
 				} else {
+					if (!allOptions.disableForceUserLangInPath && req.session.lang && lastPath != req.session.lang) return res.redirect(firstPath + req.session.lang);
 					userLang = req.session.lang || userLang;
 				}
 			}
 		}
 
 		if (firstPath.length === 0) firstPath = '/';
-		if (i18n4e.langNameInPath && i18n4e.langsFilesPath[lastPath]) {
-			userLang = lastPath;
-			req.url = firstPath;
+		if (i18n4e.langNameInPath) {
+			if (i18n4e.langsFilesPath[lastPath]) {
+				userLang = lastPath;
+				req.url = firstPath;
+			} else {
+				return res.redirect(firstPath + userLang);
+			}
 		}
 
 		const originalRender = res.render.bind(res);

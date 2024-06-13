@@ -43,6 +43,7 @@ export interface InitOptions {
 	enableClient?: boolean;
 	useLangSession?: boolean;
 	i18n4eDefaultSession?: boolean;
+	disableForceUserLangInPath?: boolean;
 }
 
 export interface minFilesOptions {

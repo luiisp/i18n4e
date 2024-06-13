@@ -41,7 +41,7 @@ const i18n4e: I18n4e = {
 	useLangSession: false,
 	init: (app: express.Application, options: InitOptions = {}): Promise<any> => {
 		if (options.i18n4eDefaultSession) createDefaultSession(app, options.dev);
-		i18nServerSideMiddlewareWrapper(app, i18n4e, options.dev);
+		i18nServerSideMiddlewareWrapper(app, i18n4e, options.dev, options);
 
 		if (options.enableClient) i18n4e.enableClient = options.enableClient;
 		if (options.defaultLang) i18n4e.defaultLang = options.defaultLang;
