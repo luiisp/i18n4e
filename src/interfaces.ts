@@ -9,6 +9,11 @@ export interface ExtraFile {
 	files: string[];
 }
 
+export interface SupportedLanguage {
+	code: string;
+	name: string;
+  }
+
 export interface optionsServerSide {
 	optionsServerSide?: boolean;
 	useAllExtraFiles?: boolean;

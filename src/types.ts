@@ -5,3 +5,7 @@ export type CallSite = {
 	getFunctionName: () => string | null;
 	getTypeName: () => string | null;
 };
+
+export type LangObj = {
+	[key: string]: string;
+  };
