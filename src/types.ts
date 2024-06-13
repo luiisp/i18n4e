@@ -8,8 +8,7 @@ export type CallSite = {
 
 export type LangObj = {
 	[key: string]: string;
-  };
-
+};
 
 export type Route = {
 	path: string;

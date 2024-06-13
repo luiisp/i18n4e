@@ -1,9 +1,9 @@
-import { Request, Response, } from 'express';
+import { Request, Response } from 'express';
 import { suportedLanguages } from '../../config/supportedLanguages.json';
 import fs from 'fs';
 import * as pathFiles from 'path';
-import { routesNames } from "../configs"
-import { Route } from "../types"
+import { routesNames } from '../configs';
+import { Route } from '../types';
 
 export const folderNameIsALanguage = (folderName: string): boolean => {
 	const isValid = suportedLanguages.find(
@@ -54,10 +54,9 @@ const findFolderRecursive = (dir: string, folderName: string): string | undefine
 	return undefined;
 };
 
-
 export const isRouteBlacklisted = (req: Request): boolean => {
 	const route = Object.values(routesNames).find(
-	  (r: Route) => r.path === req.path && r.method === req.method
+		(r: Route) => r.path === req.path && r.method === req.method
 	);
 	return !!route;
 };

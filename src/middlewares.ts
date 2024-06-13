@@ -5,7 +5,7 @@ import { I18n4e, InitOptions } from './interfaces';
 import cheerio from 'cheerio';
 import { serverSideConfigs } from './server-side.config';
 import NodeCache from 'node-cache';
-import {isRouteBlacklisted} from "./utils/utils.main"
+import { isRouteBlacklisted } from './utils/utils.main';
 
 export const i18nServerSideMiddlewareWrapper = (
 	app: express.Application,
@@ -40,7 +40,12 @@ export const i18nServerSideMiddlewareWrapper = (
 						'i18n4e session not found -> Use i18n4eDefaultSession=true or create a session for your express application.'
 					);
 				} else {
-					if (!allOptions.disableForceUserLangInPath && req.session.lang && lastPath != req.session.lang) return res.redirect(firstPath + req.session.lang);
+					if (
+						!allOptions.disableForceUserLangInPath &&
+						req.session.lang &&
+						lastPath != req.session.lang
+					)
+						return res.redirect(firstPath + req.session.lang);
 					userLang = req.session.lang || userLang;
 				}
 			}

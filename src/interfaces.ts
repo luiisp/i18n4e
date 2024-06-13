@@ -12,7 +12,7 @@ export interface ExtraFile {
 export interface SupportedLanguage {
 	code: string;
 	name: string;
-  }
+}
 
 export interface optionsServerSide {
 	optionsServerSide?: boolean;
