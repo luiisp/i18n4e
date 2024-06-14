@@ -31,6 +31,9 @@ export const i18nServerSideMiddlewareWrapper = (
 		}
 
 		if (i18n4e.enableClient) {
+			if (!req.url.endsWith('/')) {
+				req.url += '/';
+			}
 			if (i18n4e.useLangSession) {
 				if (!req.session) {
 					console.error(
@@ -43,9 +46,17 @@ export const i18nServerSideMiddlewareWrapper = (
 					if (
 						!allOptions.disableForceUserLangInPath &&
 						req.session.lang &&
+						lastPath &&
 						lastPath != req.session.lang
-					)
-						return res.redirect(firstPath + req.session.lang);
+					){
+						if (i18n4e.langsFilesPath[lastPath] && lastPath != req.session.lang){
+							return res.redirect(firstPath + req.session.lang)
+						}else{
+							return res.redirect(req.url + req.session.lang);
+						}
+						
+					}
+						
 					userLang = req.session.lang || userLang;
 				}
 			}
@@ -57,7 +68,7 @@ export const i18nServerSideMiddlewareWrapper = (
 				userLang = lastPath;
 				req.url = firstPath;
 			} else {
-				return res.redirect(firstPath + userLang);
+				return res.redirect(req.url + userLang); // here
 			}
 		}
 
