@@ -1,3 +1,7 @@
+import { supportedLanguages } from './configs';
+
+export type SupportedLanguageCode = (typeof supportedLanguages)[number];
+
 export type CallSite = {
 	getFileName: () => string | null;
 	getLineNumber: () => number | null;

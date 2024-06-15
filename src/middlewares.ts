@@ -6,6 +6,10 @@ import cheerio from 'cheerio';
 import { serverSideConfigs } from './server-side.config';
 import NodeCache from 'node-cache';
 import { isRouteBlacklisted } from './utils/utils.main';
+import { writeInHtml, readFilesVariables } from './output';
+import { cutUrl, alwaysEndWithSlash, isValidLanguageCode } from './utils/tools';
+import { SupportedLanguageCode } from './types';
+import { throwError } from './errors.handler';
 
 export const i18nServerSideMiddlewareWrapper = (
 	app: express.Application,
@@ -17,58 +21,56 @@ export const i18nServerSideMiddlewareWrapper = (
 
 	app.use((req: Request, res: Response, next: NextFunction) => {
 		if (isRouteBlacklisted(req)) return next();
-		const splitedUrl = req.url.split('/');
-		const lastPath = splitedUrl[splitedUrl.length - 1].replace('-', '_');
-		let firstPath = req.url.split('/' + lastPath)[0];
+		let { lastPath, firstPath } = cutUrl(req.url);
+		const lastFilesPathObj = i18n4e.langsFilesPath[lastPath];
+		const lastPathIsLang = isValidLanguageCode(lastPath) || lastFilesPathObj;
+		req.url = alwaysEndWithSlash(req.url);
+		let userLang: SupportedLanguageCode = i18n4e.defaultLang;
 
-		let userLang: string;
-
-		if (req.headers['accept-language']) {
-			userLang = req.headers['accept-language'].split(',')[0].toLowerCase();
-			userLang = userLang.replace('-', '_');
-		} else {
-			userLang = i18n4e.defaultLang;
+		try {
+			if (req.headers['accept-language']) {
+				userLang = req.headers['accept-language']
+					.split(',')[0]
+					.toLowerCase()
+					.replace('-', '_');
+			}
+		} catch {
+			// pass (because userLang is already set [default])
 		}
 
-		if (i18n4e.enableClient) {
-			if (!req.url.endsWith('/')) {
-				req.url += '/';
+		if (i18n4e.enableClient && i18n4e.useLangSession) {
+			if (!req.session) {
+				throwError('You are using useLangSession=true but you do not have a session activated in your express application. Use i18n4eDefaultSession=true or create a session for your express application.',
+					'session not found -> Use i18n4eDefaultSession=true or create a session for your express application.')
 			}
-			if (i18n4e.useLangSession) {
-				if (!req.session) {
-					console.error(
-						`You are using useLangSession=true but you do not have a session activated in your express application. Use i18n4eDefaultSession=true or create a session for your express application.`
-					);
-					throw new Error(
-						'i18n4e session not found -> Use i18n4eDefaultSession=true or create a session for your express application.'
-					);
-				} else {
-					if (
-						!allOptions.disableForceUserLangInPath &&
-						req.session.lang &&
-						lastPath &&
-						lastPath != req.session.lang
-					){
-						if (i18n4e.langsFilesPath[lastPath] && lastPath != req.session.lang){
-							return res.redirect(firstPath + req.session.lang)
-						}else{
-							return res.redirect(req.url + req.session.lang);
-						}
-						
-					}
-						
-					userLang = req.session.lang || userLang;
-				}
+
+			if (
+				!allOptions.disableForceUserLangInPath &&
+				allOptions.langNameInPath &&
+				req.session.lang &&
+				lastPath &&
+				lastPath != req.session.lang
+			) {
+				if (lastFilesPathObj && lastPath != req.session.lang) {
+					// ?: appath/en/ -> appath/es/ 
+					return res.redirect(firstPath + req.session.lang);
+				} 
+
+				return res.redirect(req.url + req.session.lang);
+				
 			}
+
+			userLang = req.session.lang || userLang;
 		}
 
-		if (firstPath.length === 0) firstPath = '/';
+		
 		if (i18n4e.langNameInPath) {
-			if (i18n4e.langsFilesPath[lastPath]) {
+			if (lastPathIsLang) {
 				userLang = lastPath;
 				req.url = firstPath;
 			} else {
-				return res.redirect(req.url + userLang); // here
+				// ?: appath/ -> appath/en
+				return res.redirect(req.url + userLang); 
 			}
 		}
 
@@ -107,58 +109,24 @@ export const i18nServerSideMiddlewareWrapper = (
 					userLang = i18n4e.defaultLang;
 					requestedLangArray = i18n4e.langsFilesPath[userLang];
 					if (!requestedLangArray) {
-						throw new Error('Default language not found');
+						throwError('Default language not found', 'Default language not found');
 					}
 				}
-				const mainFilePath = requestedLangArray[0];
+
+				const mainFilePath: string = requestedLangArray[0];
 				const actualDir = path.dirname(mainFilePath);
 
 				const mainFile = JSON.parse(fs.readFileSync(mainFilePath, 'utf8'));
-				for (const key in mainFile) {
-					let instance: string = `i18n invalid value (${key})`;
-					if (typeof mainFile[key] === 'string') {
-						instance = mainFile[key];
-					} else if (typeof mainFile[key] === 'object') {
-						instance = mainFile[key].message;
-					}
+				writeInHtml($, mainFile);
 
-					$('[i18nID="' + key + '"]').text(instance);
-				}
-
-				//all extra files
+				//* extra files
 				if (serverSideConfigs.useAllExtraFiles && serverSideConfigs.AllExtraFiles) {
-					serverSideConfigs.AllExtraFiles.forEach((file) => {
-						const relativePathExtra = path.join(actualDir, file + '.json');
-						const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
-						for (const key in extraFile) {
-							let instance: string = `i18n invalid value (${key})`;
-							if (typeof extraFile[key] === 'string') {
-								instance = extraFile[key];
-							} else if (typeof extraFile[key] === 'object') {
-								instance = extraFile[key].message;
-							}
-
-							$('[i18nID="' + key + '"]').text(instance);
-						}
-					});
+					readFilesVariables($, actualDir, serverSideConfigs.AllExtraFiles);
 				}
 
 				//extra files
 				if (extraFiles && extraFiles.length > 0) {
-					extraFiles.forEach((file) => {
-						const relativePathExtra = path.join(actualDir, file + '.json');
-						const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
-						for (const key in extraFile) {
-							let instance: string = `i18n invalid value (${key})`;
-							if (typeof extraFile[key] === 'string') {
-								instance = extraFile[key];
-							} else if (typeof extraFile[key] === 'object') {
-								instance = extraFile[key].message;
-							}
-
-							$('[i18nID="' + key + '"]').text(instance);
-						}
-					});
+					readFilesVariables($, actualDir, extraFiles);
 				}
 
 				const translatedHtml = $.html();

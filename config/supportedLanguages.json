@@ -89,7 +89,7 @@
 			"name": "English"
 		},
 		{
-			"code": "en-US",
+			"code": "en_US",
 			"name": "English (United States)"
 		},
 		{
@@ -305,7 +305,7 @@
 			"name": "Portuguese (Brazil)"
 		},
 		{
-			"code": "pt-PT",
+			"code": "pt_PT",
 			"name": "Portuguese (Portugal)"
 		},
 		{
