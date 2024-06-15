@@ -23,7 +23,7 @@ export const writeInHtml = ($: any, file: any) => {
 };
 
 export const readFilesVariables = ($: any,directory: any,files: any): boolean =>{
-	files.AllExtraFiles.forEach((file:string) => {
+	files.forEach((file:string) => {
 		const relativePathExtra = path.join(directory, file + '.json');
 		const extraFile = JSON.parse(fs.readFileSync(relativePathExtra, 'utf8'));
 		writeInHtml($, extraFile);
