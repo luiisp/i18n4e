@@ -1,7 +1,0 @@
-{
-	"title": "Página Olá Mundo",
-	"hello-world": "Olá Mundo",
-	"info": "Este é o meu site com internacionalização usando i18n4e.",
-	"desc": "Ele pode ser lido em vários idiomas, como Português, Russo, Espanhol e outros, dependendo do idioma falado pelo usuário.",
-	"next-page": "clique para ir para a próxima página"
-}

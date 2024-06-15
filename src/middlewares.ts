@@ -40,8 +40,10 @@ export const i18nServerSideMiddlewareWrapper = (
 
 		if (i18n4e.enableClient && i18n4e.useLangSession) {
 			if (!req.session) {
-				throwError('You are using useLangSession=true but you do not have a session activated in your express application. Use i18n4eDefaultSession=true or create a session for your express application.',
-					'session not found -> Use i18n4eDefaultSession=true or create a session for your express application.')
+				throwError(
+					'You are using useLangSession=true but you do not have a session activated in your express application. Use i18n4eDefaultSession=true or create a session for your express application.',
+					'session not found -> Use i18n4eDefaultSession=true or create a session for your express application.'
+				);
 			}
 
 			if (
@@ -52,25 +54,23 @@ export const i18nServerSideMiddlewareWrapper = (
 				lastPath != req.session.lang
 			) {
 				if (lastFilesPathObj && lastPath != req.session.lang) {
-					// ?: appath/en/ -> appath/es/ 
+					// ?: appath/en/ -> appath/es/
 					return res.redirect(firstPath + req.session.lang);
-				} 
+				}
 
 				return res.redirect(req.url + req.session.lang);
-				
 			}
 
 			userLang = req.session.lang || userLang;
 		}
 
-		
 		if (i18n4e.langNameInPath) {
 			if (lastPathIsLang) {
 				userLang = lastPath;
 				req.url = firstPath;
 			} else {
 				// ?: appath/ -> appath/en
-				return res.redirect(req.url + userLang); 
+				return res.redirect(req.url + userLang);
 			}
 		}
 

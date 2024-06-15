@@ -3,8 +3,7 @@ import { supportedLanguages } from '../configs';
 
 export const isValidLanguageCode = (code: string): code is SupportedLanguageCode => {
 	return supportedLanguages.includes(code as SupportedLanguageCode);
-  };
-
+};
 
 export const alwaysJson = (file: string): string => {
 	if (file.endsWith('.json')) {
@@ -14,13 +13,13 @@ export const alwaysJson = (file: string): string => {
 	return file + '.json';
 };
 
-export const cutUrl = (url: string): { firstPath: string, lastPath: string } => {
+export const cutUrl = (url: string): { firstPath: string; lastPath: string } => {
 	const splitedUrl = url.split('/');
 	const lastPath = splitedUrl[splitedUrl.length - 1].replace('-', '_');
 	let firstPath = url.split('/' + lastPath)[0];
 	if (firstPath.length === 0) firstPath = '/';
 	return { firstPath, lastPath };
-}
+};
 
 export const alwaysEndWithSlash = (url: string): string => {
 	if (url.endsWith('/')) {
@@ -28,7 +27,7 @@ export const alwaysEndWithSlash = (url: string): string => {
 	}
 
 	return url + '/';
-}
+};
 
 export const randomStr = (length: number): string => {
 	let result: string = '';

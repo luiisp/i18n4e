@@ -1,3 +1,0 @@
-{
-	"variable-for-all": "Esta variável é visível globalmente entre os arquivos, pois está em um arquivo declarado para todos * no arquivo sst.config.json"
-}
