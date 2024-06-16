@@ -71,19 +71,19 @@ To see the full documentation, please visit the [official documentation](https:/
 ├── en/**translation.json**
 ```json
 {
-  "hello-world": "Hello World!",
+  "hello-world": "Hello World!"
 }
 ```
 ├── pt_br/**translation.json**
 ```json
 {
-  "hello-world": "Olá Mundo!",
+  "hello-world": "Olá Mundo!"
 }
 ```
 ├── es/**translation.json**
 ```json
 {
-  "hello-world": "Hola Mundo!",
+  "hello-world": "Hola Mundo!"
 }
 ```
 
@@ -102,7 +102,7 @@ To see the full documentation, please visit the [official documentation](https:/
 
 Its done! Now your application is ready to be translated into multiple languages.
 
-**For more examples and configurations, please visit the [official documentation](https://i18n4e.vercel.app/docs).**
+**For more examples and configurations, please visit the [Examples](https://github.com/luiisp/i18n4e/tree/main/examples/).**
 
 
 
