@@ -2,6 +2,7 @@ node_modules/
 server/
 examples/
 client/
+src/
 .github/
 *.html
 .npmrc
