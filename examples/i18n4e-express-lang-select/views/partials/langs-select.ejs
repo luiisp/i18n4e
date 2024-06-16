@@ -1,0 +1,32 @@
+<div id="i18n4e-select-div">
+
+</div>
+<script>
+    const i18n4eDiv = document.getElementById('i18n4e-select-div');
+    const createSelectLangBar = async () => {
+       try {
+           const langsObj = await i18n4e.getLangs(); // get all app langs. ex: {en: 'English', es: 'Español'}
+   
+           const selectLang = document.createElement('select');
+   
+           for (const lang in langsObj) {
+               const langOption = document.createElement('option');
+               langOption.value = lang; // set lang code as value of option
+               langOption.textContent = langsObj[lang];
+               selectLang.appendChild(langOption);
+           }
+   
+           selectLang.addEventListener('change', (e) => {
+               i18n4e.setLang(e.target.value); // set selected lang
+           });
+           
+           i18n4eDiv.appendChild(selectLang);
+       } catch (error) {
+           console.error(error);
+       }
+   };
+   
+   createSelectLangBar();
+   
+   
+   </script>

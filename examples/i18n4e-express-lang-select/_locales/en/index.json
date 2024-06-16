@@ -1,0 +1,7 @@
+{
+    "title":"Hello World Page",
+    "hello-world": "Hello World",
+    "info":"This is my website with internationalization using i18n4e.",
+    "desc":"it can be read in several languages ​​such as Portuguese, Russian, Spanish and others depending on what the user speaks",
+    "next-page":"click to go to the next page"
+}
