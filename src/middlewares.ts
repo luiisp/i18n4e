@@ -7,9 +7,10 @@ import { serverSideConfigs } from './server-side.config';
 import NodeCache from 'node-cache';
 import { isRouteBlacklisted } from './utils/utils.main';
 import { writeInHtml, readFilesVariables } from './output';
-import { cutUrl, alwaysEndWithSlash, isValidLanguageCode } from './utils/tools';
+import { cutUrl, alwaysEndWithSlash, isValidLanguageCode, useReqLang } from './utils/tools';
 import { SupportedLanguageCode } from './types';
 import { throwError } from './errors.handler';
+import { getRequestedLangArray } from './utils/utils.main';
 
 export const i18nServerSideMiddlewareWrapper = (
 	app: express.Application,
@@ -25,18 +26,10 @@ export const i18nServerSideMiddlewareWrapper = (
 		const lastFilesPathObj = i18n4e.langsFilesPath[lastPath];
 		const lastPathIsLang = isValidLanguageCode(lastPath) || lastFilesPathObj;
 		req.url = alwaysEndWithSlash(req.url);
-		let userLang: SupportedLanguageCode = i18n4e.defaultLang;
+		const rLang: any = useReqLang(req.headers['accept-language'])
+		let userLang: SupportedLanguageCode = rLang || i18n4e.defaultLang;
 
-		try {
-			if (req.headers['accept-language']) {
-				userLang = req.headers['accept-language']
-					.split(',')[0]
-					.toLowerCase()
-					.replace('-', '_');
-			}
-		} catch {
-			// pass (because userLang is already set [default])
-		}
+
 
 		if (i18n4e.enableClient && i18n4e.useLangSession) {
 			if (!req.session) {
@@ -101,17 +94,10 @@ export const i18nServerSideMiddlewareWrapper = (
 			originalRender(view, options, (err, html) => {
 				if (err) return next(err);
 				const $ = cheerio.load(html);
-
+				
 				$('html').attr('lang', userLang);
-				let requestedLangArray = i18n4e.langsFilesPath[userLang];
 
-				if (!requestedLangArray || requestedLangArray.length == 0) {
-					userLang = i18n4e.defaultLang;
-					requestedLangArray = i18n4e.langsFilesPath[userLang];
-					if (!requestedLangArray) {
-						throwError('Default language not found', 'Default language not found');
-					}
-				}
+				const requestedLangArray = getRequestedLangArray(userLang);
 
 				const mainFilePath: string = requestedLangArray[0];
 				const actualDir = path.dirname(mainFilePath);

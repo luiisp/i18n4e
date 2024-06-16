@@ -15,11 +15,21 @@ export const alwaysJson = (file: string): string => {
 
 export const cutUrl = (url: string): { firstPath: string; lastPath: string } => {
 	const splitedUrl = url.split('/');
-	const lastPath = splitedUrl[splitedUrl.length - 1].replace('-', '_');
+	let lastPath = splitedUrl[splitedUrl.length - 1].replace('-', '_').toLowerCase();
 	let firstPath = url.split('/' + lastPath)[0];
 	if (firstPath.length === 0) firstPath = '/';
+	lastPath = neverEndWithSlash(lastPath);
+	firstPath = alwaysEndWithSlash(firstPath);
 	return { firstPath, lastPath };
 };
+
+export const neverEndWithSlash = (url: string): string => {
+	if (url.endsWith('/')) {
+		return url.slice(0, -1);
+	}
+
+	return url;
+}
 
 export const alwaysEndWithSlash = (url: string): string => {
 	if (url.endsWith('/')) {
@@ -28,6 +38,21 @@ export const alwaysEndWithSlash = (url: string): string => {
 
 	return url + '/';
 };
+
+export const useReqLang = (acceptLanguage: any): SupportedLanguageCode | undefined => {
+	let lang: SupportedLanguageCode | undefined = undefined;
+	try {
+		if (acceptLanguage) {
+			lang = acceptLanguage
+				.split(',')[0]
+				.toLowerCase()
+				.replace('-', '_');
+		}
+		return lang;
+	} catch {
+		return undefined;
+	}
+}
 
 export const randomStr = (length: number): string => {
 	let result: string = '';

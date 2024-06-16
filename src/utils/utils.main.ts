@@ -4,6 +4,8 @@ import fs from 'fs';
 import * as pathFiles from 'path';
 import { routesNames } from '../configs';
 import { Route } from '../types';
+import { i18n4e } from '../index';
+import { throwError } from '../errors.handler';
 
 export const folderNameIsALanguage = (folderName: string): boolean => {
 	const isValid = suportedLanguages.find(
@@ -60,3 +62,23 @@ export const isRouteBlacklisted = (req: Request): boolean => {
 	);
 	return !!route;
 };
+
+export const getDefaultLangArray = (): string[] => {
+	const defaultLangArray = i18n4e.langsFilesPath[i18n4e.defaultLang];
+
+	if (!defaultLangArray) {
+		throwError('Default language not found', 'Default language not found');
+	}
+
+	return defaultLangArray;
+}
+
+export const getRequestedLangArray = (userLang: string): string[] => {
+	let langArray = i18n4e.langsFilesPath[userLang];
+
+	if (langArray && langArray.length > 0) {
+		return langArray;
+	}
+
+	return getDefaultLangArray();
+}
