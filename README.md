@@ -99,7 +99,7 @@ To see the full documentation, please visit the [official documentation](https:/
         defaultLang:'en', // define the main language 
     })
     ```
-
+[use this example](https://github.com/luiisp/i18n4e/tree/main/examples/simple-usage).
 Its done! Now your application is ready to be translated into multiple languages.
 
 **For more examples and configurations, please visit the [Examples](https://github.com/luiisp/i18n4e/tree/main/examples/).**
