@@ -3,7 +3,7 @@
   <a href="/" target="blank"><img src="https://github.com/luiisp/i18n4e/assets/115284250/5338d39e-7cfd-4bc5-b5f1-ae4c708d5b9d" width="200" alt="i18n4e logo" /></a>
 </p>
 
-# i18n4e: i18n for Express Js 🌐👾
+# i18n4e: i18n for Express Js 🎨🌍
 [![npm version](https://badge.fury.io/js/i18n4e.svg)](https://badge.fury.io/js/i18n4e)
 [![npm](https://img.shields.io/npm/dt/i18n4e.svg)](https://www.npmjs.com/package/i18n4e) 
 ![GitHub license](https://img.shields.io/github/license/luiisp/i18n4e.svg)
