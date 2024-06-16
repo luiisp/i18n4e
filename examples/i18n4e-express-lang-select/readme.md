@@ -2,12 +2,16 @@
 
 This project is an example of how to implement internationalization (i18n) in an Express.js application.
 
-## In this example
+## 🎨 Preview
+![2024-06-15 22-15-23](https://github.com/luiisp/i18n4e/assets/115284250/852e0f67-f519-4912-86c2-65cd49d407af)
+
+## 👀 In this example
 
 - The user can select the language of the application from a dropdown.
 - The application will display the content in the selected language.
 - The application will remember the selected language for future visits.
 - The default language is the user's (if it exists in the _locales folder) or the defined default (English or another language you define)
+  
 
 
 ## 🚀 Getting Started
