@@ -57,8 +57,8 @@ const findFolderRecursive = (dir: string, folderName: string): string | undefine
 };
 
 export const isRouteBlacklisted = (req: Request): boolean => {
-	const route = Object.values(routesNames).find(
-		(r: Route) => r.path === req.path && r.method === req.method
+	const route = Object.values(routesNames).find( 
+		(r: Route) => req.path.includes(r.path) && r.method === req.method
 	);
 	return !!route;
 };

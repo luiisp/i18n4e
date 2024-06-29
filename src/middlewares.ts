@@ -14,14 +14,14 @@ import { getRequestedLangArray } from './utils/utils.main';
 
 export const i18nServerSideMiddlewareWrapper = (
 	app: express.Application,
-	i18n4e: I18n4e,
+	i18n4e: I18n4e,	
 	dev: boolean = true,
 	allOptions: InitOptions = {}
 ) => {
-	const htmlCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 });
+	const htmlCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 }); // set cache
 
-	app.use((req: Request, res: Response, next: NextFunction) => {
-		if (isRouteBlacklisted(req)) return next();
+	app.use((req: Request, res: Response, next: NextFunction) => { 
+		
 		let { lastPath, firstPath } = cutUrl(req.url);
 		const lastFilesPathObj = i18n4e.langsFilesPath[lastPath];
 		const lastPathIsLang = isValidLanguageCode(lastPath) || lastFilesPathObj;
@@ -67,6 +67,14 @@ export const i18nServerSideMiddlewareWrapper = (
 			}
 		}
 
+		if (isRouteBlacklisted(req)){
+			/* © i18n4e Pedro Luis Dias - https://github.com/luiisp/i18n4e
+			* send userLang to the next middleware
+			* solved: https://github.com/luiisp/i18n4e/issues/16
+			*/ 
+			req.i18n_lang = userLang;
+			return next();
+		} 
 		const originalRender = res.render.bind(res);
 
 		res.render = (
