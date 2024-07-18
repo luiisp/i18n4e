@@ -139,6 +139,14 @@ Please make sure to follow our [contribution guidelines](CONTRIBUTING.md) and ad
 
 We appreciate your contributions and look forward to working with you!
 
+## Contributors
+
+Thanks goes to all these wonderful people:
+
+<a href="https://github.com/luiisp/i18n4e/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=luiisp/i18n4e" />
+</a>
+
 
 
 # 📝 License
