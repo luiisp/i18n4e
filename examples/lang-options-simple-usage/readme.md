@@ -21,7 +21,7 @@ Follow these steps to get a dev environment running:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/luiisp/i18n4e/tree/main/examples/lang-options-simple-usage
+git clone https://github.com/diaslui/i18n4e/tree/main/examples/lang-options-simple-usage
 ```
 2. Install the dependencies:
 ```bash

@@ -1,12 +1,12 @@
 
 <p>
-  <a href="/" target="blank"><img src="https://github.com/luiisp/i18n4e/assets/115284250/5338d39e-7cfd-4bc5-b5f1-ae4c708d5b9d" width="200" alt="i18n4e logo" /></a>
+  <a href="/" target="blank"><img src="https://github.com/diaslui/i18n4e/assets/115284250/5338d39e-7cfd-4bc5-b5f1-ae4c708d5b9d" width="200" alt="i18n4e logo" /></a>
 </p>
 
 # i18n4e: i18n for Express Js 🎨🌍
 [![npm version](https://badge.fury.io/js/i18n4e.svg)](https://badge.fury.io/js/i18n4e)
 [![npm](https://img.shields.io/npm/dt/i18n4e.svg)](https://www.npmjs.com/package/i18n4e) 
-![GitHub license](https://img.shields.io/github/license/luiisp/i18n4e.svg)
+![GitHub license](https://img.shields.io/github/license/diaslui/i18n4e.svg)
 
 
 i18n4e is a package that offers a modern, quick and easy way to add internationalization support to your Express Js application.
@@ -99,15 +99,15 @@ To see the full documentation, please visit the [official documentation](https:/
         defaultLang:'en', // define the main language 
     })
     ```
-[use this example](https://github.com/luiisp/i18n4e/tree/main/examples/simple-usage).
+[use this example](https://github.com/diaslui/i18n4e/tree/main/examples/simple-usage).
 Its done! Now your application is ready to be translated into multiple languages.
 
-**For more examples and configurations, please visit the [Examples](https://github.com/luiisp/i18n4e/tree/main/examples/).**
+**For more examples and configurations, please visit the [Examples](https://github.com/diaslui/i18n4e/tree/main/examples/).**
 
 
 
 # 💭 Philosophy
-**i18n4e**, created with ❤️ by [Luiisp](https://github.com/luiisp), is a package with the philosophy of demystifying the difficulty of implementing i18n in web applications. At a high level, you can make various complex configurations using only boolean options.
+**i18n4e**, created with ❤️ by [diaslui](https://github.com/diaslui), is a package with the philosophy of demystifying the difficulty of implementing i18n in web applications. At a high level, you can make various complex configurations using only boolean options.
 
 # 📦 Benefits
 
@@ -121,7 +121,7 @@ Its done! Now your application is ready to be translated into multiple languages
 # 🕶️ Examples
 We have several ready-made project examples using i18n4e that you can view and use as you wish.
 
-#### [Click to see them 😎](https://github.com/luiisp/i18n4e/tree/main/examples)
+#### [Click to see them 😎](https://github.com/diaslui/i18n4e/tree/main/examples)
 
 # 💪 Contributing
 
@@ -143,8 +143,8 @@ We appreciate your contributions and look forward to working with you!
 
 Thanks goes to all these wonderful people:
 
-<a href="https://github.com/luiisp/i18n4e/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=luiisp/i18n4e" />
+<a href="https://github.com/diaslui/i18n4e/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=diaslui/i18n4e" />
 </a>
 
 
@@ -154,4 +154,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 > inspired by chrome.i18n
 
-> *Created with ❤️ by [luiisp](https://github.com/luiisp)*
+> *Created with ❤️ by [diaslui](https://github.com/diaslui)*

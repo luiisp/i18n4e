@@ -4,9 +4,9 @@ This project is a simple example of how to use the i18n4e
 
 ## 🎨 Preview
 
-![image](https://github.com/luiisp/i18n4e/assets/115284250/6b111f8e-4dd8-499a-8e7d-cc1785e88a31)
-![image](https://github.com/luiisp/i18n4e/assets/115284250/be72a617-4686-4267-aa61-b35ef979e54f)
-![image](https://github.com/luiisp/i18n4e/assets/115284250/3254b2ab-94b2-42d0-91a9-c76938f28507)
+![image](https://github.com/diaslui/i18n4e/assets/115284250/6b111f8e-4dd8-499a-8e7d-cc1785e88a31)
+![image](https://github.com/diaslui/i18n4e/assets/115284250/be72a617-4686-4267-aa61-b35ef979e54f)
+![image](https://github.com/diaslui/i18n4e/assets/115284250/3254b2ab-94b2-42d0-91a9-c76938f28507)
 
 
 
@@ -26,7 +26,7 @@ Follow these steps to get a dev environment running:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/luiisp/i18n4e/tree/main/examples/simple-usage
+git clone https://github.com/diaslui/i18n4e/tree/main/examples/simple-usage
 ```
 2. Install the dependencies:
 ```bash

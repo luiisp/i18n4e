@@ -3,7 +3,7 @@
 This project is an example of how to implement internationalization (i18n) in an Express.js application.
 
 ## 🎨 Preview
-![2024-06-15 22-15-23](https://github.com/luiisp/i18n4e/assets/115284250/852e0f67-f519-4912-86c2-65cd49d407af)
+![2024-06-15 22-15-23](https://github.com/diaslui/i18n4e/assets/115284250/852e0f67-f519-4912-86c2-65cd49d407af)
 
 ## 👀 In this example
 
@@ -24,7 +24,7 @@ Follow these steps to get a dev environment running:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/luiisp/i18n4e/tree/main/examples/i18n4e-express-lang-select
+git clone https://github.com/diaslui/i18n4e/tree/main/examples/i18n4e-express-lang-select
 ```
 2. Install the dependencies:
 ```bash

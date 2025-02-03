@@ -2,7 +2,7 @@
  * I18n4e
  * (c) 2024 Pedro Luis Dias
  * Released under the MIT License.
- * https://github.com/luiisp/i18n4e
+ * https://github.com/diaslui/i18n4e
  */
 import { i18n4e } from './config';
 declare const i18n4e: i18n4e;

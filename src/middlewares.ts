@@ -68,9 +68,9 @@ export const i18nServerSideMiddlewareWrapper = (
 		}
 
 		if (isRouteBlacklisted(req)){
-			/* © i18n4e Pedro Luis Dias - https://github.com/luiisp/i18n4e
+			/* © i18n4e Pedro Luis Dias - https://github.com/diaslui/i18n4e
 			* send userLang to the next middleware
-			* solved: https://github.com/luiisp/i18n4e/issues/16
+			* solved: https://github.com/diaslui/i18n4e/issues/16
 			*/ 
 			req.i18n_lang = userLang;
 			return next();

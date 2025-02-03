@@ -9,7 +9,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "luiisp",
+  "author": "diaslui",
   "license": "MIT",
   "dependencies": {
     "i18n4e": "latest"
